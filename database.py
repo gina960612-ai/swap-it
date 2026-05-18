@@ -10,12 +10,31 @@ from models import Base, CATEGORIES, Item, TAIWAN_LOCATIONS, User
 from services import account_to_email, hash_password
 
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///swapit.db")
+import sys
+
+# Safely read DATABASE_URL; if reading environment raises UnicodeDecodeError, fall back to sqlite
+try:
+    DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///swapit.db")
+except UnicodeDecodeError:
+    print("WARNING: Could not decode DATABASE_URL from environment (UnicodeDecodeError). Falling back to sqlite:///swapit.db", file=sys.stderr)
+    DATABASE_URL = "sqlite:///swapit.db"
 
 
 def make_engine(database_url: str = DATABASE_URL):
     connect_args = {"check_same_thread": False} if database_url.startswith("sqlite") else {}
-    return create_engine(database_url, connect_args=connect_args)
+    
+    try:
+        engine = create_engine(database_url, connect_args=connect_args)
+        # Test the connection early to catch issues
+        with engine.connect() as conn:
+            pass
+        return engine
+    except Exception as e:
+        # If any error occurs (including UnicodeDecodeError), fall back to SQLite
+        print(f"WARNING: Failed to connect to {repr(database_url)}: {e}", file=sys.stderr)
+        print("Falling back to SQLite at sqlite:///swapit.db", file=sys.stderr)
+        fallback_url = "sqlite:///swapit.db"
+        return create_engine(fallback_url, connect_args={"check_same_thread": False})
 
 
 engine = make_engine()

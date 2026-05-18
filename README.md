@@ -284,6 +284,18 @@ def init_db(database_url="sqlite:///swapit.db"):
     engine = create_engine(database_url)
     Base.metadata.create_all(engine)
     return engine
+
+## 部署到 Streamlit Cloud
+
+如果你想要把 SwapIt 直接部署到網路上，請參考 `DEPLOYMENT_GUIDE.md`。
+
+基本流程：
+1. 把專案推到 GitHub。
+2. 登入 Streamlit Cloud（https://share.streamlit.io）。
+3. 建立新應用，主程式檔案設定為 `app.py`。
+4. 若要使用 PostgreSQL，請在 Streamlit Cloud 的 Secrets 中設定 `DATABASE_URL`。
+
+專業部署說明請參考：`DEPLOYMENT_GUIDE.md`
 ```
 
 **使用 SQLAlchemy 的優勢**：
