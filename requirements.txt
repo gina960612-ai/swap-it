@@ -1,10 +1,8 @@
 streamlit==1.35.0
 sqlalchemy==2.0.30
-# Use psycopg wheel (no [binary] extra) to avoid missing binary wheels on Cloud
-psycopg==3.1.20
+# REMOVED_FOR_CLOUD: psycopg==3.1.20  # temporarily removed to avoid binary build failures on Streamlit Cloud
 werkzeug==3.0.3
 python-dotenv==1.0.1
 pytest==8.2.2
-# Use older Pillow wheel to avoid building from source on newer Python runtimes
-pillow==9.5.0
+# REMOVED_FOR_CLOUD: pillow==9.5.0    # temporarily removed to avoid source builds on Cloud
 streamlit-js-eval==0.1.7
