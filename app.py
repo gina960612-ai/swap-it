@@ -513,21 +513,14 @@ def my_items_page(user: User) -> None:
         category = st.selectbox("分類", list(categories.keys()), format_func=lambda code: categories[code])
         description = st.text_area("物品描述", height=90, placeholder="描述物品的狀態、使用時長等...")
         location = st.selectbox("物品所在縣市", list(TAIWAN_LOCATIONS.keys()), index=4)
-        st.caption("可直接上傳手機相片，或按下拍照按鈕進入相機模式（若手機支援）。")
+        st.caption("上傳商品圖片（手機可直接拍照），或使用圖片網址。")
         uploaded_image = st.file_uploader("上傳商品圖片", type=["png", "jpg", "jpeg", "webp"])
-        if st.button("📷 開啟相機拍照", key="open_item_camera", use_container_width=True):
-            st.session_state.show_item_camera = True
-
-        camera_image = None
-        if st.session_state.get("show_item_camera"):
-            camera_image = st.camera_input("拍攝商品圖片")
         image_url = st.text_input("圖片網址（可不填）", placeholder="例如：https://...")
         if st.button("🚀 刊登物品", type="primary", use_container_width=True):
             try:
                 image_path = ""
-                image_file = camera_image or uploaded_image
-                if image_file is not None:
-                    image_path = save_uploaded_image(image_file, "item")
+                if uploaded_image is not None:
+                    image_path = save_uploaded_image(uploaded_image, "item")
                 elif image_url:
                     image_path = image_url.strip()
                 latitude, longitude = location_coords(location)
@@ -841,18 +834,8 @@ def profile_page(user: User) -> None:
     if user.full_name:
         st.markdown(f"<p><strong style='color: #5A3F7F;'>正式姓名：</strong> {escape(user.full_name)}</p>", unsafe_allow_html=True)
 
-    st.caption("可以直接上傳圖片；若要使用攝影機拍照，請先按「開啟相機拍照」。")
-    avatar_col1, avatar_col2 = st.columns([2, 1])
-    with avatar_col1:
-        uploaded_avatar = st.file_uploader("上傳頭像圖片", type=["png", "jpg", "jpeg", "webp"])
-    with avatar_col2:
-        if st.button("📷 開啟相機拍照", key="open_avatar_camera", use_container_width=True):
-            st.session_state.show_avatar_camera = True
-
-    camera_avatar = None
-    if st.session_state.get("show_avatar_camera"):
-        camera_avatar = st.camera_input("拍攝頭像圖片")
-
+    st.caption("上傳頭像圖片（手機可直接拍照），或使用網址。")
+    uploaded_avatar = st.file_uploader("上傳頭像圖片", type=["png", "jpg", "jpeg", "webp"])
     avatar_url = st.text_input("頭像網址（選填）", value=user.avatar_url or "", placeholder="例如：https://...jpg")
 
     with st.form("edit_profile_form"):
@@ -865,9 +848,8 @@ def profile_page(user: User) -> None:
         if submitted:
             try:
                 avatar_path = user.avatar_url or ""
-                avatar_file = camera_avatar or uploaded_avatar
-                if avatar_file is not None:
-                    avatar_path = save_uploaded_image(avatar_file, "avatar")
+                if uploaded_avatar is not None:
+                    avatar_path = save_uploaded_image(uploaded_avatar, "avatar")
                 elif avatar_url:
                     avatar_path = avatar_url.strip()
                 update_user_profile(db(), user.user_id, nickname, formal_name, dorm, bio, avatar_path)
