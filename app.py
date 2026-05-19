@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 from html import escape
+import os
+from uuid import uuid4
 
 import streamlit as st
 
@@ -380,35 +382,65 @@ def distance_text(item: Item) -> str:
     return f"約 {distance:.1f} 公里"
 
 
+def ensure_upload_dir() -> str:
+    upload_dir = os.path.join(os.path.dirname(__file__), "uploaded_images")
+    os.makedirs(upload_dir, exist_ok=True)
+    return upload_dir
+
+
+def save_uploaded_image(uploaded_file, prefix: str) -> str:
+    if not uploaded_file:
+        return ""
+    filename = os.path.basename(uploaded_file.name)
+    _, ext = os.path.splitext(filename)
+    ext = ext.lower() or ".jpg"
+    safe_name = f"{prefix}_{uuid4().hex}{ext}"
+    upload_path = os.path.join(ensure_upload_dir(), safe_name)
+    data = uploaded_file.read()
+    with open(upload_path, "wb") as f:
+        f.write(data)
+    return upload_path
+
+
 def item_card(item: Item, score: float | None = None, score_label: str = "推薦分數") -> None:
     score_line = f"<div class='muted'>{escape(score_label)}：{score:.1f} · {distance_text(item)}</div>" if score is not None else ""
-    image_line = (
-        f"<img src='{escape(item.image_url)}' style='width: 100%; height: 320px; object-fit: cover; border-radius: 14px; margin: 15px 0;' />"
-        if item.image_url
-        else f"<div style='width: 100%; height: 320px; background: linear-gradient(135deg, #D4B5E8 0%, #B399CC 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; margin: 15px 0;'>📷</div>"
-    )
+    image_source = item.image_url if item.image_url else None
+    placeholder_line = f"<div style='width: 100%; height: 320px; background: linear-gradient(135deg, #D4B5E8 0%, #B399CC 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; margin: 15px 0;'>📷</div>"
     
     # 星星評分
     stars = "⭐" * int(item.owner.rating)
-    
+
+    st.markdown('<div class="swap-card">', unsafe_allow_html=True)
     st.markdown(
         "\n".join(
             [
-                '<div class="swap-card">',
                 f"<h3 style='color: #5A3F7F; margin: 0 0 12px 0;'>{escape(item.name)}</h3>",
                 f"<div class='muted'>{escape(category_label(item.category))} · {escape(item.location or '縣市未設定')} · <span style='color: #7B5BA3; font-weight: 600;'>{escape(STATUS_TEXT.get(item.status, item.status))}</span></div>",
                 score_line,
-                image_line,
+            ]
+        ),
+        unsafe_allow_html=True,
+    )
+    if image_source:
+        if os.path.exists(image_source):
+            st.image(image_source, use_column_width=True)
+        else:
+            st.image(image_source, use_column_width=True)
+    else:
+        st.markdown(placeholder_line, unsafe_allow_html=True)
+    st.markdown(
+        "\n".join(
+            [
                 f"<p style='color: #2C2C2C; line-height: 1.6;'>{escape(item.description or '尚未填寫描述。')}</p>",
                 f"<div style='display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid #E8DDF5;'>",
                 f"<div style='color: #888; font-size: 0.9rem;'><strong style='color: #5A3F7F;'>{escape(item.owner.name)}</strong></div>",
                 f"<div style='color: #FFD700; font-size: 1.1rem;'>{stars}</div>",
                 "</div>",
-                "</div>",
             ]
         ),
         unsafe_allow_html=True,
     )
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 def offer_request_actions(user: User, target_item: Item, key_prefix: str) -> None:
@@ -481,11 +513,19 @@ def my_items_page(user: User) -> None:
         category = st.selectbox("分類", list(categories.keys()), format_func=lambda code: categories[code])
         description = st.text_area("物品描述", height=90, placeholder="描述物品的狀態、使用時長等...")
         location = st.selectbox("物品所在縣市", list(TAIWAN_LOCATIONS.keys()), index=4)
+        uploaded_image = st.file_uploader("上傳商品圖片（可從手機相簿選擇）", type=["png", "jpg", "jpeg", "webp"])
+        camera_image = st.camera_input("或直接拍攝商品")
         image_url = st.text_input("圖片網址（可不填）", placeholder="例如：https://...")
         if st.button("🚀 刊登物品", type="primary", use_container_width=True):
             try:
+                image_path = ""
+                image_file = camera_image or uploaded_image
+                if image_file is not None:
+                    image_path = save_uploaded_image(image_file, "item")
+                elif image_url:
+                    image_path = image_url.strip()
                 latitude, longitude = location_coords(location)
-                create_item(db(), user.user_id, name, category, description, location, [], image_url, latitude, longitude)
+                create_item(db(), user.user_id, name, category, description, location, [], image_path, latitude, longitude)
                 st.success("✨ 物品已成功刊登！")
                 st.rerun()
             except ValueError as exc:
@@ -800,12 +840,20 @@ def profile_page(user: User) -> None:
         formal_name = st.text_input("正式姓名", value=user.full_name or "", max_chars=100)
         dorm = st.text_input("宿舍（縣市或校區）", value=user.dorm or "", max_chars=80)
         bio = st.text_area("個人簡介", value=user.bio or "", height=120, max_chars=500, placeholder="介紹你自己，讓其他人更了解你...")
+        uploaded_avatar = st.file_uploader("上傳頭像圖片（可從手機相簿選擇）", type=["png", "jpg", "jpeg", "webp"])
+        camera_avatar = st.camera_input("或直接拍攝頭像")
         avatar_url = st.text_input("頭像網址（選填）", value=user.avatar_url or "", placeholder="例如：https://...jpg")
         submitted = st.form_submit_button("儲存個人資料", use_container_width=True)
 
         if submitted:
             try:
-                update_user_profile(db(), user.user_id, nickname, formal_name, dorm, bio, avatar_url)
+                avatar_path = user.avatar_url or ""
+                avatar_file = camera_avatar or uploaded_avatar
+                if avatar_file is not None:
+                    avatar_path = save_uploaded_image(avatar_file, "avatar")
+                elif avatar_url:
+                    avatar_path = avatar_url.strip()
+                update_user_profile(db(), user.user_id, nickname, formal_name, dorm, bio, avatar_path)
                 st.success("✨ 個人資料已更新！")
                 st.experimental_rerun()
             except ValueError as exc:
