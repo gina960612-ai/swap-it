@@ -56,6 +56,10 @@ def ensure_schema() -> None:
         if "longitude" not in item_columns:
             conn.execute(text("ALTER TABLE items ADD COLUMN longitude FLOAT"))
 
+        user_columns = {row[1] for row in conn.exec_driver_sql("PRAGMA table_info(users)").fetchall()}
+        if "full_name" not in user_columns:
+            conn.execute(text("ALTER TABLE users ADD COLUMN full_name VARCHAR(100) DEFAULT ''"))
+
         legacy_locations = {
             "A Dorm": "臺南市",
             "A Dorm lobby": "臺南市",

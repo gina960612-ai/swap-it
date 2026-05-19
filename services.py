@@ -30,9 +30,10 @@ def display_account(user: User) -> str:
     return user.email
 
 
-def register_user(db: Session, account_name: str, password: str, confirm_password: str, nickname: str) -> User:
+def register_user(db: Session, account_name: str, password: str, confirm_password: str, nickname: str, full_name: str = "") -> User:
     account_name = account_name.strip()
     nickname = nickname.strip()
+    full_name = full_name.strip()
 
     if not ACCOUNT_RE.fullmatch(account_name):
         raise ValueError("帳號名稱需為 3-20 個英文字母、數字或底線，且第一個字必須是英文字母")
@@ -47,7 +48,7 @@ def register_user(db: Session, account_name: str, password: str, confirm_passwor
     if db.query(User).filter(User.email == email).first():
         raise ValueError("這個帳號名稱已經被使用")
 
-    user = User(name=nickname, email=email, password_hash=hash_password(password))
+    user = User(name=nickname, full_name=full_name, email=email, password_hash=hash_password(password))
     db.add(user)
     db.commit()
     db.refresh(user)
@@ -63,6 +64,30 @@ def login_user(db: Session, account_name: str, password: str) -> User | None:
     if user and check_password_hash(user.password_hash, password):
         return user
     return None
+
+
+def update_user_profile(db: Session, user_id: int, name: str, full_name: str, dorm: str, bio: str, avatar_url: str = "") -> User:
+    name = name.strip()
+    full_name = full_name.strip()
+    dorm = dorm.strip()
+    bio = bio.strip()
+    avatar_url = avatar_url.strip()
+
+    if not name:
+        raise ValueError("請輸入暱稱")
+
+    user = db.get(User, user_id)
+    if user is None:
+        raise ValueError("無法找到此使用者")
+
+    user.name = name
+    user.full_name = full_name
+    user.dorm = dorm
+    user.bio = bio
+    user.avatar_url = avatar_url
+    db.commit()
+    db.refresh(user)
+    return user
 
 
 def create_item(

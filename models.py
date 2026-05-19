@@ -60,6 +60,7 @@ class User(Base):
 
     user_id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(100), nullable=False)
+    full_name = Column(String(100), default="")
     email = Column(String(120), unique=True, nullable=False, index=True)
     password_hash = Column(String(255), nullable=False)
     dorm = Column(String(80), default="")

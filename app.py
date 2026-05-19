@@ -34,6 +34,7 @@ from services import (
     review_match,
     search_items,
     send_message,
+    update_user_profile,
     user_history_matches,
     user_matches,
 )
@@ -273,9 +274,10 @@ def login_screen() -> None:
         new_password = st.text_input("密碼", type="password", placeholder="至少 6 個字元")
         confirm_password = st.text_input("確認密碼", type="password", placeholder="再輸入一次密碼")
         nickname = st.text_input("暱稱（其他使用者看到的名字）", placeholder="例如：小明")
+        full_name = st.text_input("正式姓名（選填）", placeholder="例如：王大明")
         if st.button("✨ 建立帳號", type="primary", use_container_width=True):
             try:
-                user = register_user(db(), new_account, new_password, confirm_password, nickname)
+                user = register_user(db(), new_account, new_password, confirm_password, nickname, full_name)
                 st.session_state.user_id = user.user_id
                 st.rerun()
             except ValueError as exc:
@@ -790,12 +792,34 @@ def profile_page(user: User) -> None:
     st.divider()
     st.markdown(f"<h3 style='color: #7B5BA3;'>ℹ️ 帳號資訊</h3>", unsafe_allow_html=True)
     st.markdown(f"<p><strong style='color: #5A3F7F;'>帳號名稱：</strong> {display_account(user)}</p>", unsafe_allow_html=True)
-    st.markdown(f"<p><strong style='color: #5A3F7F;'>暱稱：</strong> {user.name}</p>", unsafe_allow_html=True)
-    
+    if user.full_name:
+        st.markdown(f"<p><strong style='color: #5A3F7F;'>正式姓名：</strong> {escape(user.full_name)}</p>", unsafe_allow_html=True)
+
+    with st.form("edit_profile_form"):
+        nickname = st.text_input("暱稱／顯示名稱", value=user.name, max_chars=100)
+        formal_name = st.text_input("正式姓名", value=user.full_name or "", max_chars=100)
+        dorm = st.text_input("宿舍（縣市或校區）", value=user.dorm or "", max_chars=80)
+        bio = st.text_area("個人簡介", value=user.bio or "", height=120, max_chars=500, placeholder="介紹你自己，讓其他人更了解你...")
+        avatar_url = st.text_input("頭像網址（選填）", value=user.avatar_url or "", placeholder="例如：https://...jpg")
+        submitted = st.form_submit_button("儲存個人資料", use_container_width=True)
+
+        if submitted:
+            try:
+                update_user_profile(db(), user.user_id, nickname, formal_name, dorm, bio, avatar_url)
+                st.success("✨ 個人資料已更新！")
+                st.experimental_rerun()
+            except ValueError as exc:
+                st.error(f"⚠️ {str(exc)}")
+
     if user.bio:
-        st.markdown(f"<div class='swap-card'><p style='color: #666; font-style: italic;'>{user.bio}</p></div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='swap-card'><p style='color: #666; font-style: italic;'>{escape(user.bio)}</p></div>", unsafe_allow_html=True)
     else:
         st.markdown(f"<p style='color: #888; font-style: italic;'>尚未填寫自我介紹。</p>", unsafe_allow_html=True)
+
+    if user.dorm:
+        st.markdown(f"<p><strong style='color: #5A3F7F;'>宿舍／位置：</strong> {escape(user.dorm)}</p>", unsafe_allow_html=True)
+    if user.avatar_url:
+        st.image(user.avatar_url, width=120)
 
 
 def history_page(user: User) -> None:
