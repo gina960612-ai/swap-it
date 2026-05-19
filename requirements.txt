@@ -1,9 +1,10 @@
 streamlit==1.35.0
 sqlalchemy==2.0.30
-# Allow psycopg binary versions compatible with supported Python runtimes
-psycopg[binary]>=3.1.17,<3.2
+# Use psycopg wheel (no [binary] extra) to avoid missing binary wheels on Cloud
+psycopg==3.1.20
 werkzeug==3.0.3
 python-dotenv==1.0.1
 pytest==8.2.2
-pillow==10.3.0
+# Use older Pillow wheel to avoid building from source on newer Python runtimes
+pillow==9.5.0
 streamlit-js-eval==0.1.7
