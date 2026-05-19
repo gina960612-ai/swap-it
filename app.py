@@ -513,8 +513,9 @@ def my_items_page(user: User) -> None:
         category = st.selectbox("分類", list(categories.keys()), format_func=lambda code: categories[code])
         description = st.text_area("物品描述", height=90, placeholder="描述物品的狀態、使用時長等...")
         location = st.selectbox("物品所在縣市", list(TAIWAN_LOCATIONS.keys()), index=4)
-        uploaded_image = st.file_uploader("上傳商品圖片（可從手機相簿選擇）", type=["png", "jpg", "jpeg", "webp"])
-        camera_image = st.camera_input("或直接拍攝商品")
+        st.caption("可直接上傳手機相片，或使用拍照功能（若手機支援）。")
+        uploaded_image = st.file_uploader("上傳商品圖片", type=["png", "jpg", "jpeg", "webp"])
+        camera_image = st.camera_input("拍攝商品圖片")
         image_url = st.text_input("圖片網址（可不填）", placeholder="例如：https://...")
         if st.button("🚀 刊登物品", type="primary", use_container_width=True):
             try:
@@ -835,14 +836,16 @@ def profile_page(user: User) -> None:
     if user.full_name:
         st.markdown(f"<p><strong style='color: #5A3F7F;'>正式姓名：</strong> {escape(user.full_name)}</p>", unsafe_allow_html=True)
 
+    st.caption("可以直接上傳圖片或用拍照功能；若要使用線上圖床，也可直接貼網址。")
+    uploaded_avatar = st.file_uploader("上傳頭像圖片", type=["png", "jpg", "jpeg", "webp"])
+    camera_avatar = st.camera_input("拍攝頭像圖片")
+    avatar_url = st.text_input("頭像網址（選填）", value=user.avatar_url or "", placeholder="例如：https://...jpg")
+
     with st.form("edit_profile_form"):
         nickname = st.text_input("暱稱／顯示名稱", value=user.name, max_chars=100)
         formal_name = st.text_input("正式姓名", value=user.full_name or "", max_chars=100)
         dorm = st.text_input("宿舍（縣市或校區）", value=user.dorm or "", max_chars=80)
         bio = st.text_area("個人簡介", value=user.bio or "", height=120, max_chars=500, placeholder="介紹你自己，讓其他人更了解你...")
-        uploaded_avatar = st.file_uploader("上傳頭像圖片（可從手機相簿選擇）", type=["png", "jpg", "jpeg", "webp"])
-        camera_avatar = st.camera_input("或直接拍攝頭像")
-        avatar_url = st.text_input("頭像網址（選填）", value=user.avatar_url or "", placeholder="例如：https://...jpg")
         submitted = st.form_submit_button("儲存個人資料", use_container_width=True)
 
         if submitted:
