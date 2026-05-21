@@ -400,12 +400,17 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
     )
     # Only show image if it exists and is valid
     if image_source and is_image_path(image_source):
-        if image_source.startswith("data:image"):
-            st.image(image_source, use_container_width=True)
-        elif os.path.exists(image_source):
-            st.image(image_source, use_container_width=True)
-        elif image_source.startswith("http"):
-            st.image(image_source, use_container_width=True)
+        try:
+            if image_source.startswith("data:image"):
+                st.image(image_source, use_container_width=True)
+            elif os.path.exists(image_source):
+                st.image(image_source, use_container_width=True)
+            elif image_source.startswith("http"):
+                st.image(image_source, use_container_width=True)
+        except Exception:
+            # If image fails to load, just skip it without showing placeholder
+            pass
+    # No placeholder shown even when there's no image
     st.markdown(
         "\n".join(
             [
