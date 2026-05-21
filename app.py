@@ -602,7 +602,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
     st.markdown(
         "\n".join(
             [
-                f"<p style='color: #2C2C2C; line-height: 1.6;'>{escape(item.description or '尚未填寫描述。')}</p>",
+                f"<p style='color: #2C2C2C; line-height: 1.6; margin-bottom: 16px;'>{escape(item.description or '尚未填寫描述。')}</p>",
                 f"<div style='display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid #E8DDF5;'>",
                 f"<div style='color: #888; font-size: 0.9rem;'><strong style='color: #5A3F7F;'>{escape(item.owner.name)}</strong></div>",
                 f"<div style='color: #FFD700; font-size: 1.1rem;'>{stars}</div>",
