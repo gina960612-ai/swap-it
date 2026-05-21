@@ -60,6 +60,73 @@ def ensure_schema() -> None:
         if "full_name" not in user_columns:
             conn.execute(text("ALTER TABLE users ADD COLUMN full_name VARCHAR(100) DEFAULT ''"))
 
+        # Migrate image_url and avatar_url from VARCHAR(255) to TEXT for base64 support
+        # SQLite doesn't support ALTER COLUMN directly, so we need to recreate the tables
+        try:
+            # Check if columns need migration by looking at their type
+            item_schema = {row[1]: row[2] for row in conn.exec_driver_sql("PRAGMA table_info(items)").fetchall()}
+            if item_schema.get("image_url", "").startswith("VARCHAR"):
+                # Migrate items table
+                conn.execute(text("""
+                    CREATE TABLE items_new (
+                        item_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        owner_id INTEGER NOT NULL,
+                        name VARCHAR(100) NOT NULL,
+                        category VARCHAR(10) NOT NULL,
+                        description TEXT,
+                        location VARCHAR(100),
+                        latitude FLOAT,
+                        longitude FLOAT,
+                        image_url TEXT,
+                        seeking_categories VARCHAR(120),
+                        status VARCHAR(20),
+                        created_at DATETIME,
+                        updated_at DATETIME,
+                        FOREIGN KEY(owner_id) REFERENCES users(user_id) ON DELETE CASCADE
+                    )
+                """))
+                conn.execute(text("""
+                    INSERT INTO items_new (item_id, owner_id, name, category, description, location, latitude, longitude, image_url, seeking_categories, status, created_at, updated_at)
+                    SELECT item_id, owner_id, name, category, description, location, latitude, longitude, image_url, seeking_categories, status, created_at, updated_at FROM items
+                """))
+                conn.execute(text("DROP TABLE items"))
+                conn.execute(text("ALTER TABLE items_new RENAME TO items"))
+                conn.execute(text("CREATE INDEX ix_items_category ON items(category)"))
+                conn.execute(text("CREATE INDEX ix_items_status ON items(status)"))
+                conn.execute(text("CREATE INDEX ix_items_owner_id ON items(owner_id)"))
+
+            user_schema = {row[1]: row[2] for row in conn.exec_driver_sql("PRAGMA table_info(users)").fetchall()}
+            if user_schema.get("avatar_url", "").startswith("VARCHAR"):
+                # Migrate users table
+                conn.execute(text("""
+                    CREATE TABLE users_new (
+                        user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        name VARCHAR(100) NOT NULL,
+                        full_name VARCHAR(100),
+                        email VARCHAR(120) UNIQUE NOT NULL,
+                        password_hash VARCHAR(255) NOT NULL,
+                        dorm VARCHAR(80),
+                        avatar_url TEXT,
+                        rating FLOAT,
+                        completed_trades INTEGER,
+                        bio VARCHAR(500),
+                        email_verified BOOLEAN,
+                        created_at DATETIME,
+                        updated_at DATETIME
+                    )
+                """))
+                conn.execute(text("""
+                    INSERT INTO users_new (user_id, name, full_name, email, password_hash, dorm, avatar_url, rating, completed_trades, bio, email_verified, created_at, updated_at)
+                    SELECT user_id, name, full_name, email, password_hash, dorm, avatar_url, rating, completed_trades, bio, email_verified, created_at, updated_at FROM users
+                """))
+                conn.execute(text("DROP TABLE users"))
+                conn.execute(text("ALTER TABLE users_new RENAME TO users"))
+                conn.execute(text("CREATE INDEX ix_users_email ON users(email)"))
+                conn.execute(text("CREATE INDEX ix_users_rating ON users(rating)"))
+        except Exception as e:
+            # Migration might fail if tables don't exist or are already migrated
+            print(f"Migration warning: {e}", file=sys.stderr)
+
         legacy_locations = {
             "A Dorm": "臺南市",
             "A Dorm lobby": "臺南市",

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from html import escape
 import os
+import base64
 from uuid import uuid4
 
 import streamlit as st
@@ -383,29 +384,31 @@ def distance_text(item: Item) -> str:
     return f"約 {distance:.1f} 公里"
 
 
-def ensure_upload_dir() -> str:
-    upload_dir = os.path.join(os.path.dirname(__file__), "uploaded_images")
-    os.makedirs(upload_dir, exist_ok=True)
-    return upload_dir
-
-
 def save_uploaded_image(uploaded_file, prefix: str) -> str:
     if not uploaded_file:
         return ""
+    data = uploaded_file.read()
+    # Convert to base64 data URL
+    base64_data = base64.b64encode(data).decode()
+    # Detect mime type from file extension
     filename = os.path.basename(uploaded_file.name)
     _, ext = os.path.splitext(filename)
-    ext = ext.lower() or ".jpg"
-    safe_name = f"{prefix}_{uuid4().hex}{ext}"
-    upload_path = os.path.join(ensure_upload_dir(), safe_name)
-    data = uploaded_file.read()
-    with open(upload_path, "wb") as f:
-        f.write(data)
-    return upload_path
+    ext = ext.lower()
+    mime_types = {
+        '.png': 'image/png',
+        '.jpg': 'image/jpeg',
+        '.jpeg': 'image/jpeg',
+        '.webp': 'image/webp',
+        '.gif': 'image/gif',
+        '.bmp': 'image/bmp'
+    }
+    mime_type = mime_types.get(ext, 'image/jpeg')
+    return f"data:{mime_type};base64,{base64_data}"
 
 
 def is_image_path(source: str) -> bool:
     lower = str(source).lower()
-    return any(lower.endswith(ext) for ext in [".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"])
+    return any(lower.endswith(ext) for ext in [".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"]) or lower.startswith("data:image")
 
 
 def item_card(item: Item, score: float | None = None, score_label: str = "推薦分數") -> None:
@@ -428,7 +431,9 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
         unsafe_allow_html=True,
     )
     if image_source:
-        if os.path.exists(image_source) and is_image_path(image_source):
+        if image_source.startswith("data:image") and is_image_path(image_source):
+            st.image(image_source, use_container_width=True)
+        elif os.path.exists(image_source) and is_image_path(image_source):
             st.image(image_source, use_container_width=True)
         elif image_source.startswith("http") and is_image_path(image_source):
             st.image(image_source, use_container_width=True)
