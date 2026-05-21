@@ -403,7 +403,7 @@ def browser_location_button() -> None:
 def login_screen() -> None:
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
-        st.markdown("<h1 style='text-align: center; color: #7B5BA3;'>🎉 SwapIt</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align: center; color: #7B5BA3;'>SwapIt</h1>", unsafe_allow_html=True)
         st.markdown("<p style='text-align: center; color: #888; font-size: 1.1rem;'>校園以物易物媒合平台</p>", unsafe_allow_html=True)
 
     st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
@@ -849,7 +849,7 @@ def outgoing_requests_view(user: User) -> None:
     for request in requests:
         trade_request_card(request, user.user_id)
         if request.status == "accepted":
-            st.success("對方已接受！請到「聊天室」分頁聯絡對方。", icon="🎉")
+            st.success("對方已接受！請到「聊天室」分頁聯絡對方。")
         elif request.status == "rejected":
             st.warning("對方拒絕了這個交換請求。", icon="😞")
 
