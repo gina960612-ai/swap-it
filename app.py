@@ -94,14 +94,14 @@ def local_css() -> None:
             border: none;
             border-radius: 16px;
             padding: 20px;
-            background: linear-gradient(135deg, #FFFFFF 0%, #F9F7FF 100%);
+            background: transparent;
             min-height: 210px;
-            box-shadow: 0 4px 15px rgba(123, 91, 163, 0.12);
+            box-shadow: none;
             transition: all 0.3s ease;
         }
         .swap-card:hover {
-            box-shadow: 0 8px 25px rgba(123, 91, 163, 0.22);
-            transform: translateY(-2px);
+            box-shadow: none;
+            transform: none;
         }
         .swap-card h3 {
             color: var(--text-dark);
