@@ -111,25 +111,24 @@ def local_css() -> None:
 
         /* 🎴 卡片樣式 (核心改版) */
         .swap-card {
-            border: 1px solid rgba(123, 91, 163, 0.08);
-            border-radius: 20px;
-            padding: 20px;
-            background: #FFFFFF;
+            border: none;
+            border-radius: 0;
+            padding: 16px 0;
+            background: transparent;
             min-height: auto;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: none;
+            transition: all 0.2s ease;
         }
         .swap-card:hover {
-            box-shadow: 0 4px 12px rgba(123, 91, 163, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
-            transform: translateY(-1px);
-            border-color: rgba(123, 91, 163, 0.15);
+            box-shadow: none;
+            transform: none;
         }
         .swap-card h3 {
             color: #1a1a1a;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            margin: 0 0 6px 0;
-            letter-spacing: -0.3px;
+            margin: 0 0 4px 0;
+            letter-spacing: -0.2px;
         }
 
         /* 文字樣式 */
@@ -586,20 +585,19 @@ def browse_page(user: User) -> None:
     st.markdown("<p style='color: #888; font-size: 1.05rem;'>找到喜歡的物品？用你的物品送出交換請求吧！</p>", unsafe_allow_html=True)
     latitude, longitude = current_coords()
 
-    with st.container(border=True):
-        st.markdown("<h3 style='color: #7B5BA3;'>🔍 搜尋物品</h3>", unsafe_allow_html=True)
-        query = st.text_input("搜尋", placeholder="例如：桌燈、電子產品、臺南市、陳小明")
-        if query.strip():
-            results = search_items(db(), user.user_id, query, limit=20, current_latitude=latitude, current_longitude=longitude)
-            if not results:
-                st.info("❌ 沒有找到符合的物品，可以換個關鍵字試試。")
-                return
-            st.success(f"✅ 找到 {len(results)} 筆結果，已依符合程度與距離排序。")
-            for index, (item, score) in enumerate(results, start=1):
-                st.markdown(f"<h4 style='color: #7B5BA3;'>💼 搜尋結果 {index}</h4>", unsafe_allow_html=True)
-                item_card(item, score, score_label="排序分數")
-                offer_request_actions(user, item, key_prefix=f"search_{index}")
+    st.markdown("<h3 style='color: #7B5BA3;'>🔍 搜尋物品</h3>", unsafe_allow_html=True)
+    query = st.text_input("搜尋", placeholder="例如：桌燈、電子產品、臺南市、陳小明")
+    if query.strip():
+        results = search_items(db(), user.user_id, query, limit=20, current_latitude=latitude, current_longitude=longitude)
+        if not results:
+            st.info("❌ 沒有找到符合的物品，可以換個關鍵字試試。")
             return
+        st.success(f"✅ 找到 {len(results)} 筆結果，已依符合程度與距離排序。")
+        for index, (item, score) in enumerate(results, start=1):
+            st.markdown(f"<h4 style='color: #7B5BA3;'>💼 搜尋結果 {index}</h4>", unsafe_allow_html=True)
+            item_card(item, score, score_label="排序分數")
+            offer_request_actions(user, item, key_prefix=f"search_{index}")
+        return
 
     st.markdown("<h3 style='color: #7B5BA3;'>💡 推薦給你</h3>", unsafe_allow_html=True)
     recommendations = get_recommendations(db(), user.user_id, limit=1, current_latitude=latitude, current_longitude=longitude)
@@ -616,9 +614,8 @@ def my_items_page(user: User) -> None:
     st.markdown("<h1 style='color: #7B5BA3;'>📦 我的物品</h1>", unsafe_allow_html=True)
     
     # 搜尋功能 - 放在最上方
-    with st.container(border=True):
-        st.markdown("<h4 style='color: #7B5BA3;'>🔍 搜尋你的物品</h4>", unsafe_allow_html=True)
-        search_query = st.text_input("輸入物品名稱或描述...", placeholder="例如：水壺、二手...", key="my_items_search")
+    st.markdown("<h4 style='color: #7B5BA3;'>🔍 搜尋你的物品</h4>", unsafe_allow_html=True)
+    search_query = st.text_input("輸入物品名稱或描述...", placeholder="例如：水壺、二手...", key="my_items_search")
     
     with st.expander("➕ 新增物品", expanded=False):
         st.markdown("<h4 style='color: #7B5BA3;'>刊登新物品</h4>", unsafe_allow_html=True)
