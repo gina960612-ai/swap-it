@@ -540,7 +540,6 @@ def my_items_page(user: User) -> None:
                 latitude, longitude = location_coords(location)
                 create_item(db(), user.user_id, name, category, description, location, [], image_path, latitude, longitude)
                 st.success("✨ 物品已成功刊登！")
-                st.rerun()
             except ValueError as exc:
                 st.error(f"⚠️ {str(exc)}")
 
@@ -911,7 +910,6 @@ def profile_page(user: User) -> None:
                     avatar_path = avatar_url.strip()
                 update_user_profile(db(), user.user_id, nickname, formal_name, dorm, bio, avatar_path)
                 st.success("✨ 個人資料已更新！")
-                st.rerun()
             except ValueError as exc:
                 st.error(f"⚠️ {str(exc)}")
 
