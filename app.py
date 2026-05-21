@@ -146,6 +146,7 @@ def local_css() -> None:
             box-shadow: 0 4px 16px rgba(123, 91, 163, 0.08);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             margin-bottom: 20px;
+            margin-top: 0.5rem;
         }
         .swap-card:hover {
             box-shadow: 0 8px 24px rgba(123, 91, 163, 0.12);
@@ -650,7 +651,7 @@ def browse_page(user: User) -> None:
             offer_request_actions(user, item, key_prefix=f"search_{index}")
         return
 
-    st.markdown("<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600;'>推薦給你</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;'>推薦給你</h3>", unsafe_allow_html=True)
     recommendations = get_recommendations(db(), user.user_id, limit=1, current_latitude=latitude, current_longitude=longitude)
     if not recommendations:
         st.info("目前沒有新的推薦。你可以新增物品、換一個位置，或查看已送出的交換請求。")
