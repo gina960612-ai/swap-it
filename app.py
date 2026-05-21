@@ -93,9 +93,9 @@ def local_css() -> None:
         .swap-card {
             border: none;
             border-radius: 16px;
-            padding: 20px;
+            padding: 10px;
             background: transparent;
-            min-height: 210px;
+            min-height: auto;
             box-shadow: none;
             transition: all 0.3s ease;
         }
@@ -107,7 +107,7 @@ def local_css() -> None:
             color: var(--text-dark);
             font-size: 1.4rem;
             font-weight: 700;
-            margin: 0 0 10px 0;
+            margin: 0 0 5px 0;
         }
 
         /* 文字樣式 */
