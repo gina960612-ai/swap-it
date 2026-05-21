@@ -583,17 +583,18 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
         unsafe_allow_html=True,
     )
     # Only show image if it exists and is valid
-    if image_source and is_image_path(image_source):
-        try:
-            if image_source.startswith("data:image"):
-                st.image(image_source, width=300)
-            elif os.path.exists(image_source):
-                st.image(image_source, width=300)
-            elif image_source.startswith("http"):
-                st.image(image_source, width=300)
-        except Exception:
-            # If image fails to load, just skip it without showing placeholder
-            pass
+    # Temporarily disabled to prevent text blocking
+    # if image_source and is_image_path(image_source):
+    #     try:
+    #         if image_source.startswith("data:image"):
+    #             st.image(image_source, width=300)
+    #         elif os.path.exists(image_source):
+    #             st.image(image_source, width=300)
+    #         elif image_source.startswith("http"):
+    #             st.image(image_source, width=300)
+    #     except Exception:
+    #         # If image fails to load, just skip it without showing placeholder
+    #         pass
     # No placeholder shown even when there's no image
     st.markdown(
         "\n".join(
