@@ -82,12 +82,12 @@ def local_css() -> None:
 
         /* 全局樣式 */
         .block-container {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-            max-width: 1100px;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+            max-width: 935px;
         }
         body {
-            background: #fafafa;
+            background: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
         
@@ -95,40 +95,42 @@ def local_css() -> None:
         .stTextInput > div > div > input,
         .stTextArea > div > div > textarea,
         .stSelectbox > div > div > select {
-            border-radius: 8px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            padding: 10px 14px;
-            font-size: 0.95rem;
+            border-radius: 0;
+            border: 1px solid #dbdbdb;
+            padding: 8px 12px;
+            font-size: 0.9rem;
             transition: all 0.2s ease;
-            background: #ffffff;
+            background: #fafafa;
         }
         .stTextInput > div > div > input:focus,
         .stTextArea > div > div > textarea:focus,
         .stSelectbox > div > div > select:focus {
-            border-color: #7B5BA3;
-            box-shadow: 0 0 0 3px rgba(123, 91, 163, 0.08);
+            border-color: #262626;
+            box-shadow: none;
+            background: #ffffff;
         }
 
         /* 🎴 卡片樣式 (核心改版) */
         .swap-card {
-            border: none;
-            border-radius: 0;
-            padding: 16px 0;
-            background: transparent;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            padding: 16px;
+            background: #ffffff;
             min-height: auto;
             box-shadow: none;
             transition: all 0.2s ease;
+            margin-bottom: 16px;
         }
         .swap-card:hover {
             box-shadow: none;
             transform: none;
         }
         .swap-card h3 {
-            color: #1a1a1a;
-            font-size: 1.3rem;
+            color: #262626;
+            font-size: 1rem;
             font-weight: 600;
-            margin: 0 0 4px 0;
-            letter-spacing: -0.2px;
+            margin: 0 0 8px 0;
+            letter-spacing: 0;
         }
 
         /* 文字樣式 */
@@ -185,94 +187,99 @@ def local_css() -> None:
         div.stButton > button {
             white-space: pre-wrap;
             height: auto;
-            min-height: 2.5rem;
-            text-align: left;
-            line-height: 1.4;
+            min-height: 2rem;
+            text-align: center;
+            line-height: 1.3;
             border: none;
-            border-radius: 10px;
-            font-weight: 500;
+            border-radius: 4px;
+            font-weight: 600;
             transition: all 0.2s ease;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            box-shadow: none;
+            font-size: 0.9rem;
         }
         div.stButton > button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transform: none;
+            box-shadow: none;
         }
         div.stButton > button:active {
-            transform: translateY(0);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            transform: none;
+            box-shadow: none;
         }
 
-        /* 📱 主要按鈕 (紫色) */
+        /* 📱 主要按鈕 (Instagram藍色) */
         [data-testid="baseButton-primary"] {
-            background: #7B5BA3;
+            background: #0095f6;
             color: white;
-            box-shadow: 0 2px 4px rgba(123, 91, 163, 0.2);
+            box-shadow: none;
         }
         [data-testid="baseButton-primary"]:hover {
-            background: #6a4e8c;
-            box-shadow: 0 4px 8px rgba(123, 91, 163, 0.3);
+            background: #0074cc;
+            box-shadow: none;
         }
         
         /* 改善 expander 樣式 */
         .streamlit-expanderHeader {
-            background: #FFFFFF;
-            border-radius: 12px;
-            padding: 14px 18px;
-            border: 1px solid rgba(123, 91, 163, 0.1);
-            font-weight: 500;
+            background: #fafafa;
+            border-radius: 0;
+            padding: 12px 16px;
+            border: 1px solid #dbdbdb;
+            font-weight: 600;
+            color: #262626;
         }
         
         /* 改善 sidebar 樣式 */
         .css-1d391kg {
-            background: #fafafa;
+            background: #ffffff;
         }
         
         /* 改善分頁標籤樣式 */
         .stTabs [data-baseweb="tab-list"] {
-            gap: 6px;
+            gap: 0;
+            border-bottom: 1px solid #dbdbdb;
         }
         .stTabs [data-baseweb="tab"] {
-            background: #FFFFFF;
-            border-radius: 8px;
-            border: 1px solid rgba(123, 91, 163, 0.1);
-            padding: 10px 20px;
-            font-weight: 500;
-            color: #6b7280;
+            background: transparent;
+            border-radius: 0;
+            border: none;
+            padding: 12px 20px;
+            font-weight: 600;
+            color: #8e8e8e;
+            border-bottom: 1px solid transparent;
         }
         .stTabs [aria-selected="true"] {
-            background: #7B5BA3;
-            color: white;
-            border-color: #7B5BA3;
+            background: transparent;
+            color: #262626;
+            border-color: #262626;
         }
 
         /* 📱 次要按鈕 */
         [data-testid="baseButton-secondary"] {
-            background: #f3f4f6;
-            color: #374151;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: transparent;
+            color: #262626;
+            border: 1px solid #dbdbdb;
         }
         [data-testid="baseButton-secondary"]:hover {
-            background: #e5e7eb;
+            background: #fafafa;
         }
         
         /* 改善容器樣式 */
         [data-testid="stVerticalBlock"] {
-            gap: 1.25rem;
+            gap: 1rem;
         }
         
         /* 改善資訊框樣式 */
         .stAlert {
-            border-radius: 10px;
-            border: none;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-            font-size: 0.95rem;
+            border-radius: 0;
+            border: 1px solid #dbdbdb;
+            box-shadow: none;
+            font-size: 0.9rem;
+            background: #fafafa;
         }
         
         /* 改善圖片樣式 */
         img {
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            border-radius: 0;
+            box-shadow: none;
         }
 
         /* ✨ 星星評分 */
@@ -362,12 +369,12 @@ def login_screen() -> None:
         st.markdown("### 歡迎回來")
         account_name = st.text_input("帳號名稱", placeholder="輸入你的帳號")
         password = st.text_input("密碼", type="password", placeholder="輸入密碼")
-        if st.button("🚀 登入", type="primary", use_container_width=True):
+        if st.button("登入", type="primary", use_container_width=True):
             user = login_user(db(), account_name, password)
             if user:
                 st.session_state.user_id = user.user_id
                 st.rerun()
-            st.error("❌ 帳號或密碼不正確。")
+            st.error("帳號或密碼不正確。")
 
     with register_tab:
         st.markdown("### 加入 SwapIt 社群")
@@ -376,38 +383,38 @@ def login_screen() -> None:
         confirm_password = st.text_input("確認密碼", type="password", placeholder="再輸入一次密碼")
         nickname = st.text_input("暱稱（其他使用者看到的名字）", placeholder="例如：小明")
         full_name = st.text_input("正式姓名（選填）", placeholder="例如：王大明")
-        if st.button("✨ 建立帳號", type="primary", use_container_width=True):
+        if st.button("建立帳號", type="primary", use_container_width=True):
             try:
                 user = register_user(db(), new_account, new_password, confirm_password, nickname, full_name)
                 st.session_state.user_id = user.user_id
                 st.rerun()
             except ValueError as exc:
-                st.error(f"⚠️ {str(exc)}")
+                st.error(f"{str(exc)}")
 
 
 
 def sidebar(user: User) -> str:
     incoming_count, rejected_count = notification_counts(db(), user.user_id)
     
-    st.sidebar.markdown("<h2 style='color: #7B5BA3; text-align: center;'>🎉 SwapIt</h2>", unsafe_allow_html=True)
+    st.sidebar.markdown("<h2 style='color: #262626; text-align: center;'>SwapIt</h2>", unsafe_allow_html=True)
     st.sidebar.markdown("---")
     
-    st.sidebar.markdown(f"<p style='color: #5A3F7F; font-weight: 700;'>👤 {user.name}</p>", unsafe_allow_html=True)
+    st.sidebar.markdown(f"<p style='color: #262626; font-weight: 600;'>{user.name}</p>", unsafe_allow_html=True)
     st.sidebar.caption(f"帳號：{display_account(user)}")
     
     # 評分卡片
     st.sidebar.markdown(f"""
     <div class='swap-card' style='text-align: center;'>
-    <p style='color: #7B5BA3; font-weight: 700; margin: 0;'>⭐ {user.rating:.1f} / 5</p>
-    <p style='color: #888; font-size: 0.9rem; margin: 5px 0 0 0;'>已完成 {user.completed_trades} 次交換</p>
+    <p style='color: #262626; font-weight: 600; margin: 0;'>{user.rating:.1f} / 5</p>
+    <p style='color: #8e8e8e; font-size: 0.85rem; margin: 5px 0 0 0;'>已完成 {user.completed_trades} 次交換</p>
     </div>
     """, unsafe_allow_html=True)
     
     if incoming_count or rejected_count:
-        st.sidebar.warning(f"🔔 {incoming_count} 個待回覆，{rejected_count} 個被拒絕", icon="⚠️")
+        st.sidebar.warning(f"{incoming_count} 個待回覆，{rejected_count} 個被拒絕", icon="⚠️")
 
     st.sidebar.markdown("---")
-    st.sidebar.markdown("<p style='color: #5A3F7F; font-weight: 700;'>📍 目前位置</p>", unsafe_allow_html=True)
+    st.sidebar.markdown("<p style='color: #262626; font-weight: 600;'>目前位置</p>", unsafe_allow_html=True)
     
     browser_location_button()
     default_location = st.session_state.get("current_location_name", "臺南市")
@@ -416,24 +423,24 @@ def sidebar(user: User) -> str:
         list(TAIWAN_LOCATIONS.keys()),
         index=list(TAIWAN_LOCATIONS.keys()).index(default_location) if default_location in TAIWAN_LOCATIONS else 4,
     )
-    if st.sidebar.button("📌 套用位置", use_container_width=True):
+    if st.sidebar.button("套用位置", use_container_width=True):
         latitude, longitude = location_coords(manual_location)
         save_current_location(manual_location, latitude, longitude)
-        st.sidebar.success(f"✅ 位置已設定為 {manual_location}")
+        st.sidebar.success(f"位置已設定為 {manual_location}")
 
     current_name = st.session_state.get("current_location_name", "尚未設定")
     st.sidebar.caption(f"推薦會優先顯示靠近「{current_name}」的物品。")
 
     st.sidebar.markdown("---")
-    st.sidebar.markdown("<p style='color: #5A3F7F; font-weight: 700;'>🧭 功能選單</p>", unsafe_allow_html=True)
+    st.sidebar.markdown("<p style='color: #262626; font-weight: 600;'>功能選單</p>", unsafe_allow_html=True)
     page = st.sidebar.radio(
         "選擇功能",
-        ["🌟 瀏覽物品", "📦 我的物品", "💬 交換請求與聊天", "📜 歷史交易", "👤 個人資料"],
+        ["瀏覽物品", "我的物品", "交換請求與聊天", "歷史交易", "個人資料"],
         label_visibility="collapsed"
     )
     
     st.sidebar.markdown("---")
-    if st.sidebar.button("🚪 登出", use_container_width=True):
+    if st.sidebar.button("登出", use_container_width=True):
         st.session_state.user_id = None
         st.rerun()
     
@@ -497,17 +504,17 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
         with col_actions:
             c_edit, c_delete = st.columns(2)
             with c_edit:
-                if st.button("✏️", key=f"edit_inline_{item.item_id}", help="編輯"):
+                if st.button("編輯", key=f"edit_inline_{item.item_id}", help="編輯"):
                     st.session_state.edit_item_id = item.item_id
                     st.rerun()
             with c_delete:
-                if st.button("🗑️", key=f"delete_inline_{item.item_id}", help="刪除"):
+                if st.button("刪除", key=f"delete_inline_{item.item_id}", help="刪除"):
                     try:
                         delete_item(db(), user.user_id, item.item_id)
-                        st.success("✨ 物品已刪除！")
+                        st.success("物品已刪除！")
                         st.rerun()
                     except ValueError as exc:
-                        st.error(f"⚠️ {str(exc)}")
+                        st.error(f"{str(exc)}")
     else:
         st.markdown(
             f"<h3 style='color: #5A3F7F; margin: 0 0 12px 0;'>{escape(item.name)}</h3>",
@@ -554,55 +561,55 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
 def offer_request_actions(user: User, target_item: Item, key_prefix: str) -> None:
     my_items = active_user_items(db(), user.user_id)
     if not my_items:
-        st.info("💡 你需要先在「我的物品」刊登至少一個交換中的物品，才能送出交換請求。")
+        st.info("你需要先在「我的物品」刊登至少一個交換中的物品，才能送出交換請求。")
         return
 
     offer_item = st.selectbox(
         "選擇你要拿來交換的物品",
         my_items,
-        format_func=lambda item: f"💝 {item.name}（{category_label(item.category)}，{item.location or '縣市未設定'}）",
+        format_func=lambda item: f"{item.name}（{category_label(item.category)}，{item.location or '縣市未設定'}）",
         key=f"{key_prefix}_offer_{target_item.item_id}",
     )
-    message = st.text_input("💬 給對方的留言（可不填）", key=f"{key_prefix}_message_{target_item.item_id}")
+    message = st.text_input("給對方的留言（可不填）", key=f"{key_prefix}_message_{target_item.item_id}")
 
     left, right = st.columns(2)
     with left:
-        if st.button("👎 不感興趣", use_container_width=True, key=f"{key_prefix}_left_{target_item.item_id}"):
+        if st.button("不感興趣", use_container_width=True, key=f"{key_prefix}_left_{target_item.item_id}"):
             record_swipe(db(), user.user_id, target_item.item_id, "left")
             st.rerun()
     with right:
-        if st.button("👍 有興趣！", type="primary", use_container_width=True, key=f"{key_prefix}_request_{target_item.item_id}"):
+        if st.button("有興趣", type="primary", use_container_width=True, key=f"{key_prefix}_request_{target_item.item_id}"):
             try:
                 create_trade_request(db(), user.user_id, offer_item.item_id, target_item.item_id, message)
-                st.success(f"✨ 已送出：你想用「{offer_item.name}」交換「{target_item.name}」。")
+                st.success(f"已送出：你想用「{offer_item.name}」交換「{target_item.name}」。")
                 st.rerun()
             except ValueError as exc:
-                st.error(f"⚠️ {str(exc)}")
+                st.error(f"{str(exc)}")
 
 
 def browse_page(user: User) -> None:
-    st.markdown("<h1 style='color: #7B5BA3;'>🌟 瀏覽物品</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #888; font-size: 1.05rem;'>找到喜歡的物品？用你的物品送出交換請求吧！</p>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #111827;'>瀏覽物品</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #6b7280; font-size: 0.95rem;'>找到喜歡的物品？用你的物品送出交換請求吧！</p>", unsafe_allow_html=True)
     latitude, longitude = current_coords()
 
-    st.markdown("<h3 style='color: #7B5BA3;'>🔍 搜尋物品</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #111827; font-size: 1.1rem; font-weight: 600;'>搜尋物品</h3>", unsafe_allow_html=True)
     query = st.text_input("搜尋", placeholder="例如：桌燈、電子產品、臺南市、陳小明")
     if query.strip():
         results = search_items(db(), user.user_id, query, limit=20, current_latitude=latitude, current_longitude=longitude)
         if not results:
-            st.info("❌ 沒有找到符合的物品，可以換個關鍵字試試。")
+            st.info("沒有找到符合的物品，可以換個關鍵字試試。")
             return
-        st.success(f"✅ 找到 {len(results)} 筆結果，已依符合程度與距離排序。")
+        st.success(f"找到 {len(results)} 筆結果，已依符合程度與距離排序。")
         for index, (item, score) in enumerate(results, start=1):
-            st.markdown(f"<h4 style='color: #7B5BA3;'>💼 搜尋結果 {index}</h4>", unsafe_allow_html=True)
+            st.markdown(f"<h4 style='color: #111827; font-size: 1rem; font-weight: 600;'>搜尋結果 {index}</h4>", unsafe_allow_html=True)
             item_card(item, score, score_label="排序分數")
             offer_request_actions(user, item, key_prefix=f"search_{index}")
         return
 
-    st.markdown("<h3 style='color: #7B5BA3;'>💡 推薦給你</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #111827; font-size: 1.1rem; font-weight: 600;'>推薦給你</h3>", unsafe_allow_html=True)
     recommendations = get_recommendations(db(), user.user_id, limit=1, current_latitude=latitude, current_longitude=longitude)
     if not recommendations:
-        st.info("🤔 目前沒有新的推薦。你可以新增物品、換一個位置，或查看已送出的交換請求。")
+        st.info("目前沒有新的推薦。你可以新增物品、換一個位置，或查看已送出的交換請求。")
         return
 
     item, score = recommendations[0]
@@ -611,14 +618,14 @@ def browse_page(user: User) -> None:
 
 
 def my_items_page(user: User) -> None:
-    st.markdown("<h1 style='color: #7B5BA3;'>📦 我的物品</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #111827;'>我的物品</h1>", unsafe_allow_html=True)
     
     # 搜尋功能 - 放在最上方
-    st.markdown("<h4 style='color: #7B5BA3;'>🔍 搜尋你的物品</h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='color: #111827; font-size: 1rem; font-weight: 600;'>搜尋你的物品</h4>", unsafe_allow_html=True)
     search_query = st.text_input("輸入物品名稱或描述...", placeholder="例如：水壺、二手...", key="my_items_search")
     
-    with st.expander("➕ 新增物品", expanded=False):
-        st.markdown("<h4 style='color: #7B5BA3;'>刊登新物品</h4>", unsafe_allow_html=True)
+    with st.expander("新增物品", expanded=False):
+        st.markdown("<h4 style='color: #111827; font-size: 1rem; font-weight: 600;'>刊登新物品</h4>", unsafe_allow_html=True)
         categories = category_options()
         name = st.text_input("物品名稱", placeholder="例如：二手桌燈")
         category = st.selectbox("分類", list(categories.keys()), format_func=lambda code: categories[code])
@@ -627,7 +634,7 @@ def my_items_page(user: User) -> None:
         st.caption("上傳商品圖片或檔案（手機可直接拍照），或使用圖片網址。")
         uploaded_image = st.file_uploader("上傳商品圖片或檔案", type=None)
         image_url = st.text_input("圖片網址（可不填）", placeholder="例如：https://...")
-        if st.button("🚀 刊登物品", type="primary", use_container_width=True):
+        if st.button("刊登物品", type="primary", use_container_width=True):
             try:
                 image_path = ""
                 if uploaded_image is not None:
@@ -636,11 +643,11 @@ def my_items_page(user: User) -> None:
                     image_path = image_url.strip()
                 latitude, longitude = location_coords(location)
                 create_item(db(), user.user_id, name, category, description, location, [], image_path, latitude, longitude)
-                st.success("✨ 物品已成功刊登！")
+                st.success("物品已成功刊登！")
             except ValueError as exc:
-                st.error(f"⚠️ {str(exc)}")
+                st.error(f"{str(exc)}")
 
-    st.markdown("<h3 style='color: #7B5BA3;'>你的物品列表</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #111827; font-size: 1.1rem; font-weight: 600;'>你的物品列表</h3>", unsafe_allow_html=True)
     if "edit_item_id" not in st.session_state:
         st.session_state.edit_item_id = None
 
@@ -655,9 +662,9 @@ def my_items_page(user: User) -> None:
     
     if not items:
         if search_query.strip():
-            st.info("🔍 沒有找到符合搜尋的物品。")
+            st.info("沒有找到符合搜尋的物品。")
         else:
-            st.info("📭 你還沒有刊登任何物品。")
+            st.info("你還沒有刊登任何物品。")
         return
     
     for item in items:
@@ -672,7 +679,7 @@ def my_items_page(user: User) -> None:
                 st.rerun()
             return
 
-        st.markdown("<h3 style='color: #7B5BA3;'>✏️ 編輯物品</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color: #111827; font-size: 1.1rem; font-weight: 600;'>編輯物品</h3>", unsafe_allow_html=True)
         with st.form("edit_item_form"):
             name = st.text_input("物品名稱", value=edit_item.name, placeholder="例如：二手桌燈")
             category = st.selectbox("分類", list(category_options().keys()), index=list(category_options().keys()).index(edit_item.category), format_func=lambda code: category_options()[code])
@@ -681,7 +688,7 @@ def my_items_page(user: User) -> None:
             st.caption("替換物品圖片或檔案（手機可直接拍照），或使用圖片網址。")
             uploaded_image = st.file_uploader("替換商品圖片或檔案", type=None)
             image_url = st.text_input("圖片網址（填寫則會覆蓋現有圖片）", placeholder="例如：https://...")
-            if st.form_submit_button("💾 儲存修改", use_container_width=True):
+            if st.form_submit_button("儲存修改", use_container_width=True):
                 try:
                     image_path = edit_item.image_url or ""
                     if uploaded_image is not None:
@@ -690,11 +697,11 @@ def my_items_page(user: User) -> None:
                         image_path = image_url.strip()
                     latitude, longitude = location_coords(location)
                     update_item(db(), user.user_id, edit_item.item_id, name, category, description, location, image_path, latitude, longitude)
-                    st.success("✨ 物品已更新！")
+                    st.success("物品已更新！")
                     st.session_state.edit_item_id = None
                     st.rerun()
                 except ValueError as exc:
-                    st.error(f"⚠️ {str(exc)}")
+                    st.error(f"{str(exc)}")
 
         if st.button("取消編輯", use_container_width=True, key="cancel_edit_item"):
             st.session_state.edit_item_id = None
@@ -704,10 +711,10 @@ def my_items_page(user: User) -> None:
 def trade_request_card(request: TradeRequest, viewer_id: int) -> None:
     is_receiver = request.receiver_id == viewer_id
     if is_receiver:
-        title = "📥 收到的交換請求"
+        title = "收到的交換請求"
         description = f"對方想用「{request.offer_item.name}」交換你的「{request.target_item.name}」"
     else:
-        title = "📤 你送出的交換請求"
+        title = "你送出的交換請求"
         description = f"你想用「{request.offer_item.name}」交換對方的「{request.target_item.name}」"
 
     status_text = REQUEST_STATUS_TEXT.get(request.status, request.status)
@@ -728,7 +735,7 @@ def trade_request_card(request: TradeRequest, viewer_id: int) -> None:
             <span style='color: {status_color}; font-weight: 600;'>{escape(status_text)}</span>
             <span style='color: #888; font-size: 0.85rem;'>{request.created_at.strftime('%m-%d %H:%M')}</span>
         </div>
-        {f"<p style='color: #666; margin: 10px 0 0 0; font-style: italic;'>💬 {escape(request.message)}</p>" if request.message else ""}
+        {f"<p style='color: #666; margin: 10px 0 0 0; font-style: italic;'>{escape(request.message)}</p>" if request.message else ""}
         </div>
         """,
         unsafe_allow_html=True,
@@ -762,50 +769,50 @@ def chat_list_label(match: Match, user_id: int) -> str:
 def incoming_requests_view(user: User) -> None:
     requests = incoming_trade_requests(db(), user.user_id)
     if not requests:
-        st.info("📭 目前沒有等待你回覆的交換請求。")
+        st.info("目前沒有等待你回覆的交換請求。")
         return
     
-    st.markdown(f"<p style='color: #888;'>📬 收到 <strong style='color: #FF69B4;'>{len(requests)}</strong> 個新請求</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color: #888;'>收到 <strong style='color: #FF69B4;'>{len(requests)}</strong> 個新請求</p>", unsafe_allow_html=True)
     for request in requests:
         trade_request_card(request, user.user_id)
         left, right = st.columns(2)
         with left:
-            if st.button("✅ 接受，進入聊天", type="primary", use_container_width=True, key=f"accept_{request.request_id}"):
+            if st.button("接受，進入聊天", type="primary", use_container_width=True, key=f"accept_{request.request_id}"):
                 try:
                     accept_trade_request(db(), request.request_id, user.user_id)
-                    st.success("✨ 已接受交換請求，聊天室已建立！")
+                    st.success("已接受交換請求，聊天室已建立！")
                     st.rerun()
                 except ValueError as exc:
-                    st.error(f"⚠️ {str(exc)}")
+                    st.error(f"{str(exc)}")
         with right:
-            if st.button("❌ 不接受", use_container_width=True, key=f"reject_{request.request_id}"):
+            if st.button("不接受", use_container_width=True, key=f"reject_{request.request_id}"):
                 try:
                     reject_trade_request(db(), request.request_id, user.user_id)
-                    st.success("✅ 已拒絕交換請求。")
+                    st.success("已拒絕交換請求。")
                     st.rerun()
                 except ValueError as exc:
-                    st.error(f"⚠️ {str(exc)}")
+                    st.error(f"{str(exc)}")
 
 
 def outgoing_requests_view(user: User) -> None:
     requests = outgoing_trade_requests(db(), user.user_id)
     if not requests:
-        st.info("📤 你還沒有送出任何交換請求。")
+        st.info("你還沒有送出任何交換請求。")
         return
     
-    st.markdown(f"<p style='color: #888;'>💬 已送出 <strong style='color: #7B5BA3;'>{len(requests)}</strong> 個請求</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color: #888;'>已送出 <strong style='color: #7B5BA3;'>{len(requests)}</strong> 個請求</p>", unsafe_allow_html=True)
     for request in requests:
         trade_request_card(request, user.user_id)
         if request.status == "accepted":
-            st.success("✅ 對方已接受！請到「聊天室」分頁聯絡對方。", icon="🎉")
+            st.success("對方已接受！請到「聊天室」分頁聯絡對方。", icon="🎉")
         elif request.status == "rejected":
-            st.warning("❌ 對方拒絕了這個交換請求。", icon="😞")
+            st.warning("對方拒絕了這個交換請求。", icon="😞")
 
 
 def chat_view(user: User) -> None:
     matches = user_matches(db(), user.user_id)
     if not matches:
-        st.info("💬 目前沒有已接受的交換。接受交換請求後，聊天室會出現在這裡。")
+        st.info("目前沒有已接受的交換。接受交換請求後，聊天室會出現在這裡。")
         return
 
     match_ids = {match.match_id for match in matches}
@@ -817,8 +824,8 @@ def chat_view(user: User) -> None:
     list_col, chat_col = st.columns([1.2, 2.3], gap="medium")
     
     with list_col:
-        st.markdown("<h4 style='color: #7B5BA3; margin: 0;'>💬 聊天室列表</h4>", unsafe_allow_html=True)
-        st.markdown("<p style='color: #888; font-size: 0.9rem;'>點選開始對話</p>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: #262626; margin: 0;'>聊天室列表</h4>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #8e8e8e; font-size: 0.85rem;'>點選開始對話</p>", unsafe_allow_html=True)
         
         for match_option in matches:
             label = chat_list_label(match_option, user.user_id)
@@ -826,11 +833,11 @@ def chat_view(user: User) -> None:
             
             # 聊天列表項
             is_selected = match_option.match_id == selected_id
-            bg_color = "linear-gradient(135deg, #E8DDF5 0%, #D4B5E8 100%)" if is_selected else "#FFFFFF"
-            border_color = "#7B5BA3" if is_selected else "#E8DDF5"
+            bg_color = "#fafafa" if is_selected else "#ffffff"
+            border_color = "#262626" if is_selected else "#dbdbdb"
             
             if st.button(
-                f"👤 {other.name}\n{match_option.item_a.name if match_option.item_a.owner_id == user.user_id else match_option.item_b.name} ↔ {match_option.item_b.name if match_option.item_a.owner_id == user.user_id else match_option.item_a.name}",
+                f"{other.name}\n{match_option.item_a.name if match_option.item_a.owner_id == user.user_id else match_option.item_b.name} ↔ {match_option.item_b.name if match_option.item_a.owner_id == user.user_id else match_option.item_a.name}",
                 use_container_width=True,
                 key=f"chat_pick_{match_option.match_id}",
             ):
@@ -842,25 +849,25 @@ def chat_view(user: User) -> None:
         other = db().get(User, match.other_user_id(user.user_id))
         mine, theirs = match_items_for_user(match, user.user_id)
         
-        st.markdown(f"<h3 style='color: #7B5BA3;'>💬 與 {other.name} 的對話</h3>", unsafe_allow_html=True)
-        st.markdown(f"<p style='color: #888; font-size: 0.95rem;'>💝 {mine.name} ↔ {theirs.name}</p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='color: #262626;'>與 {other.name} 的對話</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='color: #8e8e8e; font-size: 0.85rem;'>{mine.name} ↔ {theirs.name}</p>", unsafe_allow_html=True)
 
         action_cols = st.columns(3)
         with action_cols[0]:
-            if match.status == "active" and st.button("✅ 標記完成", use_container_width=True):
+            if match.status == "active" and st.button("標記完成", use_container_width=True):
                 complete_match(db(), match.match_id)
                 st.rerun()
         with action_cols[1]:
-            if match.status == "active" and st.button("❌ 取消配對", use_container_width=True):
+            if match.status == "active" and st.button("取消配對", use_container_width=True):
                 cancel_match(db(), match.match_id)
                 st.rerun()
         with action_cols[2]:
             status_badge = {
-                "active": "🟢 進行中",
-                "completed": "✅ 已完成",
-                "cancelled": "❌ 已取消",
+                "active": "進行中",
+                "completed": "已完成",
+                "cancelled": "已取消",
             }.get(match.status, match.status)
-            st.markdown(f"<div style='padding: 8px; background: #F5F3FA; border-radius: 8px; text-align: center; color: #7B5BA3; font-weight: 600;'>{status_badge}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='padding: 8px; background: #fafafa; border-radius: 0; text-align: center; color: #262626; font-weight: 600;'>{status_badge}</div>", unsafe_allow_html=True)
 
         st.divider()
         
@@ -901,28 +908,28 @@ def chat_view(user: User) -> None:
 
         if match.status == "completed":
             st.divider()
-            st.markdown("<h4 style='color: #7B5BA3;'>⭐ 評價這次交換</h4>", unsafe_allow_html=True)
+            st.markdown("<h4 style='color: #262626;'>評價這次交換</h4>", unsafe_allow_html=True)
             already_reviewed = db().query(Review).filter(Review.match_id == match.match_id, Review.reviewer_id == user.user_id).first()
             if already_reviewed:
-                st.success(f"✅ 你給了 {already_reviewed.rating} 分，留言：{already_reviewed.comment or '(無)'}")
+                st.success(f"你給了 {already_reviewed.rating} 分，留言：{already_reviewed.comment or '(無)'}")
             else:
                 rating = st.slider("評分", 1, 5, 5, label_visibility="collapsed")
                 comment = st.text_area("留言", height=80, placeholder="分享這次交換的體驗...")
-                if st.button("📤 送出評價", type="primary", use_container_width=True):
+                if st.button("送出評價", type="primary", use_container_width=True):
                     try:
                         review_match(db(), match.match_id, user.user_id, rating, comment)
-                        st.success("✨ 評價已送出！")
+                        st.success("評價已送出！")
                         st.rerun()
                     except ValueError as exc:
-                        st.error(f"⚠️ {str(exc)}")
+                        st.error(f"{str(exc)}")
 
 
 def requests_and_chat_page(user: User) -> None:
-    st.markdown("<h1 style='color: #7B5BA3;'>💬 交換請求與聊天</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #111827;'>交換請求與聊天</h1>", unsafe_allow_html=True)
     incoming_count, rejected_count = notification_counts(db(), user.user_id)
-    st.markdown(f"<p style='color: #888;'>📬 收到待回覆：<strong style='color: #FF69B4;'>{incoming_count}</strong> · 🚫 被拒絕通知：<strong style='color: #FF6B9D;'>{rejected_count}</strong></p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='color: #6b7280;'>收到待回覆：<strong style='color: #FF69B4;'>{incoming_count}</strong> · 被拒絕通知：<strong style='color: #FF6B9D;'>{rejected_count}</strong></p>", unsafe_allow_html=True)
     
-    incoming_tab, outgoing_tab, chat_tab = st.tabs(["📥 收到的請求", "📤 我的請求通知", "💬 聊天室"])
+    incoming_tab, outgoing_tab, chat_tab = st.tabs(["收到的請求", "我的請求通知", "聊天室"])
     with incoming_tab:
         incoming_requests_view(user)
     with outgoing_tab:
@@ -932,41 +939,41 @@ def requests_and_chat_page(user: User) -> None:
 
 
 def profile_page(user: User) -> None:
-    st.markdown("<h1 style='color: #7B5BA3;'>👤 個人資料</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #111827;'>個人資料</h1>", unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown(f"""
         <div class='swap-card' style='text-align: center;'>
-        <p style='color: #7B5BA3; font-size: 2rem; margin: 0;'>⭐</p>
-        <p style='color: #5A3F7F; font-weight: 700; margin: 8px 0 0 0;'>{user.rating:.1f} / 5</p>
-        <p style='color: #888; font-size: 0.9rem; margin: 4px 0 0 0;'>評分</p>
+        <p style='color: #262626; font-size: 1.5rem; margin: 0; font-weight: 600;'>{user.rating:.1f}</p>
+        <p style='color: #8e8e8e; font-weight: 500; margin: 8px 0 0 0;'>/ 5</p>
+        <p style='color: #8e8e8e; font-size: 0.85rem; margin: 4px 0 0 0;'>評分</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col2:
         st.markdown(f"""
         <div class='swap-card' style='text-align: center;'>
-        <p style='color: #7B5BA3; font-size: 2rem; margin: 0;'>✅</p>
-        <p style='color: #5A3F7F; font-weight: 700; margin: 8px 0 0 0;'>{user.completed_trades}</p>
-        <p style='color: #888; font-size: 0.9rem; margin: 4px 0 0 0;'>已完成交換</p>
+        <p style='color: #262626; font-size: 1.5rem; margin: 0; font-weight: 600;'>{user.completed_trades}</p>
+        <p style='color: #8e8e8e; font-weight: 500; margin: 8px 0 0 0;'>次</p>
+        <p style='color: #8e8e8e; font-size: 0.85rem; margin: 4px 0 0 0;'>已完成交換</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col3:
         st.markdown(f"""
         <div class='swap-card' style='text-align: center;'>
-        <p style='color: #7B5BA3; font-size: 2rem; margin: 0;'>📦</p>
-        <p style='color: #5A3F7F; font-weight: 700; margin: 8px 0 0 0;'>{len(user.items)}</p>
-        <p style='color: #888; font-size: 0.9rem; margin: 4px 0 0 0;'>刊登物品</p>
+        <p style='color: #262626; font-size: 1.5rem; margin: 0; font-weight: 600;'>{len(user.items)}</p>
+        <p style='color: #8e8e8e; font-weight: 500; margin: 8px 0 0 0;'>個</p>
+        <p style='color: #8e8e8e; font-size: 0.85rem; margin: 4px 0 0 0;'>刊登物品</p>
         </div>
         """, unsafe_allow_html=True)
     
     st.divider()
-    st.markdown(f"<h3 style='color: #7B5BA3;'>ℹ️ 帳號資訊</h3>", unsafe_allow_html=True)
-    st.markdown(f"<p><strong style='color: #5A3F7F;'>帳號名稱：</strong> {display_account(user)}</p>", unsafe_allow_html=True)
+    st.markdown(f"<h3 style='color: #262626;'>帳號資訊</h3>", unsafe_allow_html=True)
+    st.markdown(f"<p><strong style='color: #262626;'>帳號名稱：</strong> {display_account(user)}</p>", unsafe_allow_html=True)
     if user.full_name:
-        st.markdown(f"<p><strong style='color: #5A3F7F;'>正式姓名：</strong> {escape(user.full_name)}</p>", unsafe_allow_html=True)
+        st.markdown(f"<p><strong style='color: #262626;'>正式姓名：</strong> {escape(user.full_name)}</p>", unsafe_allow_html=True)
 
     st.caption("上傳頭像圖片或檔案（手機可直接拍照），或使用網址。")
     uploaded_avatar = st.file_uploader("上傳頭像圖片或檔案", type=None)
@@ -987,9 +994,9 @@ def profile_page(user: User) -> None:
                 elif avatar_url:
                     avatar_path = avatar_url.strip()
                 update_user_profile(db(), user.user_id, nickname, formal_name, dorm, bio, avatar_path)
-                st.success("✨ 個人資料已更新！")
+                st.success("個人資料已更新！")
             except ValueError as exc:
-                st.error(f"⚠️ {str(exc)}")
+                st.error(f"{str(exc)}")
 
     if user.bio:
         st.markdown(f"<div class='swap-card'><p style='color: #666; font-style: italic;'>{escape(user.bio)}</p></div>", unsafe_allow_html=True)
@@ -997,18 +1004,18 @@ def profile_page(user: User) -> None:
         st.markdown(f"<p style='color: #888; font-style: italic;'>尚未填寫自我介紹。</p>", unsafe_allow_html=True)
 
     if user.dorm:
-        st.markdown(f"<p><strong style='color: #5A3F7F;'>宿舍／位置：</strong> {escape(user.dorm)}</p>", unsafe_allow_html=True)
+        st.markdown(f"<p><strong style='color: #262626;'>宿舍／位置：</strong> {escape(user.dorm)}</p>", unsafe_allow_html=True)
     if user.avatar_url:
         st.image(user.avatar_url, width=120)
 
 
 def history_page(user: User) -> None:
-    st.markdown("<h1 style='color: #7B5BA3;'>📜 歷史交易</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #888;'>查看所有已完成和已取消的交易紀錄。</p>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #111827;'>歷史交易</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #6b7280;'>查看所有已完成和已取消的交易紀錄。</p>", unsafe_allow_html=True)
     
     history_matches = user_history_matches(db(), user.user_id)
     if not history_matches:
-        st.info("📭 目前沒有歷史交易紀錄。")
+        st.info("目前沒有歷史交易紀錄。")
         return
     
     # 分別篩選已完成和已取消的交易
@@ -1017,7 +1024,7 @@ def history_page(user: User) -> None:
     
     # 已完成的交易
     if completed_matches:
-        st.markdown("<h2 style='color: #7B5BA3;'>✅ 已完成的交易</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='color: #262626;'>已完成的交易</h2>", unsafe_allow_html=True)
         for match in completed_matches:
             mine, theirs = match_items_for_user(match, user.user_id)
             other = db().get(User, match.other_user_id(user.user_id))
@@ -1028,16 +1035,15 @@ def history_page(user: User) -> None:
                 col1, col2 = st.columns([3, 1])
                 
                 with col1:
-                    st.markdown(f"<h4 style='color: #5A3F7F; margin: 0;'>💝 {escape(mine.name)} ↔ {escape(theirs.name)}</h4>", unsafe_allow_html=True)
-                    st.markdown(f"<p style='color: #888; margin: 8px 0;'>👤 {escape(other.name)} · ⭐ {other.rating:.1f}</p>", unsafe_allow_html=True)
-                    st.caption(f"✅ 完成時間：{match.completed_at.strftime('%Y-%m-%d %H:%M')}")
+                    st.markdown(f"<h4 style='color: #262626; margin: 0;'>{escape(mine.name)} ↔ {escape(theirs.name)}</h4>", unsafe_allow_html=True)
+                    st.markdown(f"<p style='color: #8e8e8e; margin: 8px 0;'>{escape(other.name)} · {other.rating:.1f}</p>", unsafe_allow_html=True)
+                    st.caption(f"完成時間：{match.completed_at.strftime('%Y-%m-%d %H:%M')}")
                 
                 with col2:
                     if user_review:
-                        stars = "⭐" * user_review.rating
-                        st.markdown(f"<div style='text-align: center; padding: 10px; background: #FFF8DC; border-radius: 8px;'><strong style='color: #FFD700; font-size: 1.2rem;'>{stars}</strong><br><small style='color: #888;'>{user_review.rating} 分</small></div>", unsafe_allow_html=True)
+                        st.markdown(f"<div style='text-align: center; padding: 10px; background: #fafafa; border-radius: 0;'><strong style='color: #262626; font-size: 1.2rem;'>{user_review.rating}</strong><br><small style='color: #8e8e8e;'>分</small></div>", unsafe_allow_html=True)
                     else:
-                        st.info("尚未評分", icon="⭐")
+                        st.info("尚未評分")
                 
                 # 評分按鈕
                 if not user_review:
@@ -1059,31 +1065,31 @@ def history_page(user: User) -> None:
                         )
                     
                     if st.button(
-                        "📤 送出評分",
+                        "送出評分",
                         key=f"history_submit_{match.match_id}",
                         use_container_width=True
                     ):
                         try:
                             review_match(db(), match.match_id, user.user_id, rating, comment)
-                            st.success("✨ 評分已送出！")
+                            st.success("評分已送出！")
                             st.rerun()
                         except ValueError as exc:
-                            st.error(f"⚠️ {str(exc)}")
+                            st.error(f"{str(exc)}")
                 else:
                     if user_review.comment:
-                        st.markdown(f"<p style='color: #666; font-style: italic;'>💬 {escape(user_review.comment)}</p>", unsafe_allow_html=True)
+                        st.markdown(f"<p style='color: #666; font-style: italic;'>{escape(user_review.comment)}</p>", unsafe_allow_html=True)
     
     # 已取消的交易
     if cancelled_matches:
-        st.markdown("<h2 style='color: #A85D7B;'>❌ 已取消的交易</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='color: #262626;'>已取消的交易</h2>", unsafe_allow_html=True)
         for match in cancelled_matches:
             mine, theirs = match_items_for_user(match, user.user_id)
             other = db().get(User, match.other_user_id(user.user_id))
             
             with st.container(border=True):
-                st.markdown(f"<h4 style='color: #A85D7B;'>💔 {escape(mine.name)} ↔ {escape(theirs.name)}</h4>", unsafe_allow_html=True)
-                st.markdown(f"<p style='color: #888;'>👤 {escape(other.name)}</p>", unsafe_allow_html=True)
-                st.caption(f"❌ 取消時間：{match.updated_at.strftime('%Y-%m-%d %H:%M')}")
+                st.markdown(f"<h4 style='color: #262626;'>{escape(mine.name)} ↔ {escape(theirs.name)}</h4>", unsafe_allow_html=True)
+                st.markdown(f"<p style='color: #8e8e8e;'>{escape(other.name)}</p>", unsafe_allow_html=True)
+                st.caption(f"取消時間：{match.updated_at.strftime('%Y-%m-%d %H:%M')}")
 
 
 def main() -> None:
