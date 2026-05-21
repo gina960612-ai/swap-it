@@ -307,7 +307,7 @@ def local_css() -> None:
         
         /* 改善容器樣式 */
         [data-testid="stVerticalBlock"] {
-            gap: 0.5rem;
+            gap: 0;
         }
         
         /* 改善資訊框樣式 */
