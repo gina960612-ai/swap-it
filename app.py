@@ -526,20 +526,6 @@ def my_items_page(user: User) -> None:
         with c1:
             item_card(item)
         with c2:
-            status_emoji = {
-                "active": "🟢",
-                "matched": "🟠",
-                "completed": "✅",
-                "cancelled": "❌",
-            }.get(item.status, "⚪")
-            
-            st.markdown(f"""
-            <div style='text-align: center; padding: 12px; background: #F5F3FA; border-radius: 8px;'>
-            <p style='margin: 0; font-size: 1.5rem;'>{status_emoji}</p>
-            <p style='margin: 4px 0 0 0; color: #7B5BA3; font-weight: 600; font-size: 0.9rem;'>{STATUS_TEXT.get(item.status, item.status)}</p>
-            </div>
-            """, unsafe_allow_html=True)
-            
             if item.status == "active":
                 if st.button("✏️ 編輯", use_container_width=True, key=f"edit_item_{item.item_id}"):
                     st.session_state.edit_item_id = item.item_id
