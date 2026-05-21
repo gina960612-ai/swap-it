@@ -308,6 +308,13 @@ def local_css() -> None:
         /* 改善容器樣式 */
         [data-testid="stVerticalBlock"] {
             gap: 0;
+            border: none;
+        }
+        [data-testid="stVerticalBlockBorder"] {
+            border: none;
+        }
+        [data-testid="element-container"] {
+            border: none;
         }
         
         /* 改善資訊框樣式 */
