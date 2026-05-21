@@ -259,12 +259,12 @@ def login_screen() -> None:
 
     st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
 
-    login_tab, register_tab, demo_tab = st.tabs(["🔐 登入", "✍️ 建立帳號", "🎭 示範帳號"])
+    login_tab, register_tab = st.tabs(["🔐 登入", "✍️ 建立帳號"])
     
     with login_tab:
         st.markdown("### 歡迎回來")
-        account_name = st.text_input("帳號名稱", value="alex", placeholder="輸入你的帳號")
-        password = st.text_input("密碼", type="password", value="password", placeholder="輸入密碼")
+        account_name = st.text_input("帳號名稱", placeholder="輸入你的帳號")
+        password = st.text_input("密碼", type="password", placeholder="輸入密碼")
         if st.button("🚀 登入", type="primary", use_container_width=True):
             user = login_user(db(), account_name, password)
             if user:
@@ -287,37 +287,6 @@ def login_screen() -> None:
             except ValueError as exc:
                 st.error(f"⚠️ {str(exc)}")
 
-    with demo_tab:
-        st.markdown("### 試用示範帳號")
-        st.info("👉 可以直接用下面帳號測試，密碼都是 `password`。")
-        
-        demo_cols = st.columns(3)
-        with demo_cols[0]:
-            st.markdown("""
-            <div class='swap-card'>
-            <h4 style='color: #7B5BA3;'>Alex</h4>
-            <p>alex</p>
-            <p style='font-size: 0.9rem; color: #888;'>password</p>
-            </div>
-            """, unsafe_allow_html=True)
-        
-        with demo_cols[1]:
-            st.markdown("""
-            <div class='swap-card'>
-            <h4 style='color: #7B5BA3;'>Mina</h4>
-            <p>mina</p>
-            <p style='font-size: 0.9rem; color: #888;'>password</p>
-            </div>
-            """, unsafe_allow_html=True)
-        
-        with demo_cols[2]:
-            st.markdown("""
-            <div class='swap-card'>
-            <h4 style='color: #7B5BA3;'>Jay</h4>
-            <p>jay</p>
-            <p style='font-size: 0.9rem; color: #888;'>password</p>
-            </div>
-            """, unsafe_allow_html=True)
 
 
 def sidebar(user: User) -> str:
