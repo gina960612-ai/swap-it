@@ -82,16 +82,19 @@ def local_css() -> None:
 
         /* 強制背景顏色 */
         [data-testid="stAppViewContainer"] > div {
-            background-color: #e8d5ff !important;
+            background-color: #FFFFFF !important;
         }
         [data-testid="stAppViewContainer"] {
-            background-color: #e8d5ff !important;
+            background-color: #FFFFFF !important;
         }
         .main {
-            background-color: #e8d5ff !important;
+            background-color: #FFFFFF !important;
         }
         body {
-            background-color: #e8d5ff !important;
+            background-color: #FFFFFF !important;
+        }
+        .stApp {
+            background-color: #FFFFFF !important;
         }
 
         /* 全局樣式 */
@@ -101,14 +104,16 @@ def local_css() -> None:
             max-width: 1100px !important;
         }
         body {
-            background: #e8d5ff !important;
+            background: #FFFFFF !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 16px;
+            color: #2C2C2C;
         }
         .main {
-            background: #e8d5ff !important;
+            background: #FFFFFF !important;
         }
         .stApp {
-            background: #e8d5ff !important;
+            background: #FFFFFF !important;
         }
         
         /* 改善輸入框樣式 */
@@ -165,18 +170,27 @@ def local_css() -> None:
         /* 區段標題樣式 */
         h1 {
             color: #7B5BA3;
-            font-weight: 800;
+            font-weight: 700;
             letter-spacing: -0.5px;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #7B5BA3 0%, #9B7BB4 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 2rem;
+        }
+        h2 {
+            color: #7B5BA3;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            font-size: 1.5rem;
         }
         h3 {
             color: #5A3F7F;
-            font-weight: 700;
+            font-weight: 600;
             letter-spacing: -0.25px;
+            font-size: 1.25rem;
+        }
+        h4 {
+            color: #2C2C2C;
+            font-weight: 600;
+            font-size: 1.1rem;
         }
 
         /* 📋 請求框樣式 */
