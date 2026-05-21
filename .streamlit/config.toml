@@ -1,8 +1,8 @@
 [theme]
 primaryColor = "#7B5BA3"
-backgroundColor = "#e8d5ff"
-secondaryBackgroundColor = "#f0e6ff"
-textColor = "#2C2C2C"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F5F3FA"
+textColor = "#7B5BA3"
 
 [server]
 port = 8501

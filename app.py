@@ -426,17 +426,17 @@ def login_screen() -> None:
 def sidebar(user: User) -> str:
     incoming_count, rejected_count = notification_counts(db(), user.user_id)
     
-    st.sidebar.markdown("<h2 style='color: #262626; text-align: center;'>SwapIt</h2>", unsafe_allow_html=True)
+    st.sidebar.markdown("<h1 style='color: #7B5BA3; text-align: center; font-size: 2.5rem; font-weight: 800; margin: 0 0 1rem 0;'>SwapIt</h1>", unsafe_allow_html=True)
     st.sidebar.markdown("---")
     
-    st.sidebar.markdown(f"<p style='color: #262626; font-weight: 600;'>{user.name}</p>", unsafe_allow_html=True)
+    st.sidebar.markdown(f"<p style='color: #7B5BA3; font-weight: 600;'>{user.name}</p>", unsafe_allow_html=True)
     st.sidebar.caption(f"帳號：{display_account(user)}")
     
     # 評分卡片
     st.sidebar.markdown(f"""
     <div class='swap-card' style='text-align: center;'>
-    <p style='color: #262626; font-weight: 600; margin: 0;'>{user.rating:.1f} / 5</p>
-    <p style='color: #8e8e8e; font-size: 0.85rem; margin: 5px 0 0 0;'>已完成 {user.completed_trades} 次交換</p>
+    <p style='color: #7B5BA3; font-weight: 600; margin: 0;'>{user.rating:.1f} / 5</p>
+    <p style='color: #7B5BA3; font-size: 0.85rem; margin: 5px 0 0 0;'>已完成 {user.completed_trades} 次交換</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -444,7 +444,7 @@ def sidebar(user: User) -> str:
         st.sidebar.warning(f"{incoming_count} 個待回覆，{rejected_count} 個被拒絕", icon="⚠️")
 
     st.sidebar.markdown("---")
-    st.sidebar.markdown("<p style='color: #262626; font-weight: 600;'>目前位置</p>", unsafe_allow_html=True)
+    st.sidebar.markdown("<p style='color: #7B5BA3; font-weight: 600;'>目前位置</p>", unsafe_allow_html=True)
     
     browser_location_button()
     default_location = st.session_state.get("current_location_name", "臺南市")
@@ -462,7 +462,7 @@ def sidebar(user: User) -> str:
     st.sidebar.caption(f"推薦會優先顯示靠近「{current_name}」的物品。")
 
     st.sidebar.markdown("---")
-    st.sidebar.markdown("<p style='color: #262626; font-weight: 600;'>功能選單</p>", unsafe_allow_html=True)
+    st.sidebar.markdown("<p style='color: #7B5BA3; font-weight: 600;'>功能選單</p>", unsafe_allow_html=True)
     page = st.sidebar.radio(
         "選擇功能",
         ["瀏覽物品", "我的物品", "交換請求與聊天", "歷史交易", "個人資料"],
