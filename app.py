@@ -330,6 +330,8 @@ def local_css() -> None:
         img {
             border-radius: 12px;
             box-shadow: 0 4px 16px rgba(123, 91, 163, 0.12);
+            margin-bottom: 24px;
+            display: block;
         }
 
         /* ✨ 星星評分 */
@@ -585,13 +587,13 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
         try:
             if image_source.startswith("data:image"):
                 st.image(image_source, use_container_width=True)
-                st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+                st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
             elif os.path.exists(image_source):
                 st.image(image_source, use_container_width=True)
-                st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+                st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
             elif image_source.startswith("http"):
                 st.image(image_source, use_container_width=True)
-                st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+                st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
         except Exception:
             # If image fails to load, just skip it without showing placeholder
             pass
