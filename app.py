@@ -580,7 +580,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
         "\n".join(
             [
                 f"<div class='muted' style='margin-bottom: 8px;'>{escape(category_label(item.category))} · {escape(item.location or '縣市未設定')} · <span style='color: #7B5BA3; font-weight: 600;'>{escape(STATUS_TEXT.get(item.status, item.status))}</span></div>",
-                f"<div class='muted' style='margin-bottom: 12px;'>{score_line}</div>",
+                f"<div class='muted' style='margin-bottom: 20px;'>{score_line}</div>",
             ]
         ),
         unsafe_allow_html=True,
