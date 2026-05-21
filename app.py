@@ -398,16 +398,14 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
         ),
         unsafe_allow_html=True,
     )
-    if image_source:
-        if image_source.startswith("data:image") and is_image_path(image_source):
+    # Only show image if it exists and is valid
+    if image_source and is_image_path(image_source):
+        if image_source.startswith("data:image"):
             st.image(image_source, use_container_width=True)
-        elif os.path.exists(image_source) and is_image_path(image_source):
+        elif os.path.exists(image_source):
             st.image(image_source, use_container_width=True)
-        elif image_source.startswith("http") and is_image_path(image_source):
+        elif image_source.startswith("http"):
             st.image(image_source, use_container_width=True)
-    else:
-        placeholder_line = f"<div style='width: 100%; height: 320px; background: linear-gradient(135deg, #D4B5E8 0%, #B399CC 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; margin: 15px 0;'>📷</div>"
-        st.markdown(placeholder_line, unsafe_allow_html=True)
     st.markdown(
         "\n".join(
             [
