@@ -585,7 +585,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
     
     # Only show image if it exists and is valid - in a separate section
     if image_source and is_image_path(image_source):
-        st.markdown("<div style='margin: 24px 0; padding: 16px;'>", unsafe_allow_html=True)
+        st.markdown("<div style='margin: 32px 0; padding: 20px;'>", unsafe_allow_html=True)
         try:
             if image_source.startswith("data:image"):
                 st.image(image_source, use_container_width=True)
