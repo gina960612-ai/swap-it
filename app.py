@@ -1103,13 +1103,13 @@ def main() -> None:
         return
 
     page = sidebar(user)
-    if page == "🌟 瀏覽物品":
+    if page == "瀏覽物品":
         browse_page(user)
-    elif page == "📦 我的物品":
+    elif page == "我的物品":
         my_items_page(user)
-    elif page == "💬 交換請求與聊天":
+    elif page == "交換請求與聊天":
         requests_and_chat_page(user)
-    elif page == "📜 歷史交易":
+    elif page == "歷史交易":
         history_page(user)
     else:
         profile_page(user)
