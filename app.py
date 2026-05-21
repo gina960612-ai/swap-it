@@ -380,7 +380,7 @@ def is_image_path(source: str) -> bool:
     return any(lower.endswith(ext) for ext in [".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"]) or lower.startswith("data:image")
 
 
-def item_card(item: Item, score: float | None = None, score_label: str = "推薦分數") -> None:
+def item_card(item: Item, score: float | None = None, score_label: str = "推薦分數", show_actions: bool = False, user: User | None = None) -> None:
     score_line = f"<div class='muted'>{escape(score_label)}：{score:.1f} · {distance_text(item)}</div>" if score is not None else ""
     image_source = item.image_url if item.image_url else None
     
@@ -388,10 +388,38 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
     stars = "⭐" * int(item.owner.rating)
 
     st.markdown('<div class="swap-card">', unsafe_allow_html=True)
+    
+    # Show inline actions if requested
+    if show_actions and user and item.owner_id == user.user_id and item.status == "active":
+        col_name, col_actions = st.columns([3, 1])
+        with col_name:
+            st.markdown(
+                f"<h3 style='color: #5A3F7F; margin: 0 0 12px 0;'>{escape(item.name)}</h3>",
+                unsafe_allow_html=True,
+            )
+        with col_actions:
+            c_edit, c_delete = st.columns(2)
+            with c_edit:
+                if st.button("✏️", key=f"edit_inline_{item.item_id}", help="編輯"):
+                    st.session_state.edit_item_id = item.item_id
+                    st.rerun()
+            with c_delete:
+                if st.button("🗑️", key=f"delete_inline_{item.item_id}", help="刪除"):
+                    try:
+                        delete_item(db(), user.user_id, item.item_id)
+                        st.success("✨ 物品已刪除！")
+                        st.rerun()
+                    except ValueError as exc:
+                        st.error(f"⚠️ {str(exc)}")
+    else:
+        st.markdown(
+            f"<h3 style='color: #5A3F7F; margin: 0 0 12px 0;'>{escape(item.name)}</h3>",
+            unsafe_allow_html=True,
+        )
+    
     st.markdown(
         "\n".join(
             [
-                f"<h3 style='color: #5A3F7F; margin: 0 0 12px 0;'>{escape(item.name)}</h3>",
                 f"<div class='muted'>{escape(category_label(item.category))} · {escape(item.location or '縣市未設定')} · <span style='color: #7B5BA3; font-weight: 600;'>{escape(STATUS_TEXT.get(item.status, item.status))}</span></div>",
                 score_line,
             ]
@@ -522,23 +550,7 @@ def my_items_page(user: User) -> None:
         return
     
     for item in items:
-        c1, c2 = st.columns([4, 1])
-        with c1:
-            item_card(item)
-        with c2:
-            if item.status == "active":
-                if st.button("✏️ 編輯", use_container_width=True, key=f"edit_item_{item.item_id}"):
-                    st.session_state.edit_item_id = item.item_id
-                    st.rerun()
-                if st.button("🗑️ 刪除", use_container_width=True, key=f"delete_item_{item.item_id}"):
-                    try:
-                        delete_item(db(), user.user_id, item.item_id)
-                        st.success("✨ 物品已刪除！")
-                        st.rerun()
-                    except ValueError as exc:
-                        st.error(f"⚠️ {str(exc)}")
-            else:
-                st.caption("已有交易紀錄\n不能刪除", help="只有交換中的物品可以刪除")
+        item_card(item, show_actions=True, user=user)
 
     if st.session_state.edit_item_id:
         edit_item = db().get(Item, st.session_state.edit_item_id)
