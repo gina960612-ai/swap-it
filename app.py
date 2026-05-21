@@ -642,9 +642,23 @@ def my_items_page(user: User) -> None:
     if "edit_item_id" not in st.session_state:
         st.session_state.edit_item_id = None
 
+    # 搜尋功能
+    search_query = st.text_input("🔍 搜尋你的物品", placeholder="輸入物品名稱或描述...", key="my_items_search")
+    
     items = db().query(Item).filter(Item.owner_id == user.user_id).order_by(Item.created_at.desc()).all()
+    
+    # 過濾物品
+    if search_query.strip():
+        search_lower = search_query.lower()
+        items = [item for item in items if 
+                  search_lower in item.name.lower() or 
+                  (item.description and search_lower in item.description.lower())]
+    
     if not items:
-        st.info("📭 你還沒有刊登任何物品。")
+        if search_query.strip():
+            st.info("🔍 沒有找到符合搜尋的物品。")
+        else:
+            st.info("📭 你還沒有刊登任何物品。")
         return
     
     for item in items:
