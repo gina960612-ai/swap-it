@@ -87,11 +87,14 @@ def local_css() -> None:
             max-width: 1100px !important;
         }
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%) !important;
+            background: #e8d5ff !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
         .main {
-            background: transparent !important;
+            background: #e8d5ff !important;
+        }
+        .stApp {
+            background: #e8d5ff !important;
         }
         
         /* 改善輸入框樣式 */
