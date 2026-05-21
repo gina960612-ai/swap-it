@@ -138,7 +138,7 @@ def local_css() -> None:
 
         /* 🎴 卡片樣式 (核心改版) */
         .swap-card {
-            border: 1px solid rgba(123, 91, 163, 0.15);
+            border: none;
             border-radius: 16px;
             padding: 20px;
             background: #ffffff;
@@ -151,7 +151,6 @@ def local_css() -> None:
         .swap-card:hover {
             box-shadow: 0 8px 24px rgba(123, 91, 163, 0.12);
             transform: translateY(-2px);
-            border-color: rgba(123, 91, 163, 0.25);
         }
         .swap-card h3 {
             color: #2C2C2C;
@@ -196,7 +195,7 @@ def local_css() -> None:
 
         /* 📋 請求框樣式 */
         .request-box {
-            border: 1px solid rgba(123, 91, 163, 0.1);
+            border: none;
             border-radius: 16px;
             padding: 18px;
             background: #FFFFFF;
@@ -206,7 +205,6 @@ def local_css() -> None:
         }
         .request-box:hover {
             box-shadow: 0 2px 8px rgba(123, 91, 163, 0.08);
-            border-color: rgba(123, 91, 163, 0.2);
         }
 
         /* 💬 聊天列表 */
