@@ -616,6 +616,7 @@ def offer_request_actions(user: User, target_item: Item, key_prefix: str) -> Non
         st.info("你需要先在「我的物品」刊登至少一個交換中的物品，才能送出交換請求。")
         return
 
+    st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
     offer_item = st.selectbox(
         "選擇你要拿來交換的物品",
         my_items,
