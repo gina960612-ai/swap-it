@@ -146,7 +146,7 @@ def local_css() -> None:
             box-shadow: 0 4px 16px rgba(123, 91, 163, 0.08);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             margin-bottom: 20px;
-            margin-top: 0.5rem;
+            margin-top: 0;
         }
         .swap-card:hover {
             box-shadow: 0 8px 24px rgba(123, 91, 163, 0.12);
@@ -543,7 +543,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
         col_name, col_actions = st.columns([5, 1])
         with col_name:
             st.markdown(
-                f"<h3 style='color: #5A3F7F; margin: 0 0 12px 0;'>{escape(item.name)}</h3>",
+                f"<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600; margin: 0 0 12px 0;'>{escape(item.name)}</h3>",
                 unsafe_allow_html=True,
             )
         with col_actions:
@@ -562,7 +562,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
                         st.error(f"{str(exc)}")
     else:
         st.markdown(
-            f"<h3 style='color: #5A3F7F; margin: 0 0 12px 0;'>{escape(item.name)}</h3>",
+            f"<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600; margin: 0 0 12px 0;'>{escape(item.name)}</h3>",
             unsafe_allow_html=True,
         )
     
@@ -651,7 +651,7 @@ def browse_page(user: User) -> None:
             offer_request_actions(user, item, key_prefix=f"search_{index}")
         return
 
-    st.markdown("<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;'>推薦給你</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600; margin-bottom: 0;'>推薦給你</h3>", unsafe_allow_html=True)
     recommendations = get_recommendations(db(), user.user_id, limit=1, current_latitude=latitude, current_longitude=longitude)
     if not recommendations:
         st.info("目前沒有新的推薦。你可以新增物品、換一個位置，或查看已送出的交換請求。")
