@@ -615,7 +615,12 @@ def browse_page(user: User) -> None:
 def my_items_page(user: User) -> None:
     st.markdown("<h1 style='color: #7B5BA3;'>📦 我的物品</h1>", unsafe_allow_html=True)
     
-    with st.expander("➕ 新增物品", expanded=True):
+    # 搜尋功能 - 放在最上方
+    with st.container(border=True):
+        st.markdown("<h4 style='color: #7B5BA3;'>🔍 搜尋你的物品</h4>", unsafe_allow_html=True)
+        search_query = st.text_input("輸入物品名稱或描述...", placeholder="例如：水壺、二手...", key="my_items_search")
+    
+    with st.expander("➕ 新增物品", expanded=False):
         st.markdown("<h4 style='color: #7B5BA3;'>刊登新物品</h4>", unsafe_allow_html=True)
         categories = category_options()
         name = st.text_input("物品名稱", placeholder="例如：二手桌燈")
@@ -642,9 +647,6 @@ def my_items_page(user: User) -> None:
     if "edit_item_id" not in st.session_state:
         st.session_state.edit_item_id = None
 
-    # 搜尋功能
-    search_query = st.text_input("🔍 搜尋你的物品", placeholder="輸入物品名稱或描述...", key="my_items_search")
-    
     items = db().query(Item).filter(Item.owner_id == user.user_id).order_by(Item.created_at.desc()).all()
     
     # 過濾物品
