@@ -585,17 +585,12 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
     # Only show image if it exists and is valid
     if image_source and is_image_path(image_source):
         try:
-            col1, col2 = st.columns([1, 1])
-            with col1:
-                if image_source.startswith("data:image"):
-                    st.image(image_source, use_container_width=True)
-                elif os.path.exists(image_source):
-                    st.image(image_source, use_container_width=True)
-                elif image_source.startswith("http"):
-                    st.image(image_source, use_container_width=True)
-                st.markdown("<div style='height: 40px;'></div>", unsafe_allow_html=True)
-            with col2:
-                st.markdown("&nbsp;", unsafe_allow_html=True)
+            if image_source.startswith("data:image"):
+                st.image(image_source, width=300)
+            elif os.path.exists(image_source):
+                st.image(image_source, width=300)
+            elif image_source.startswith("http"):
+                st.image(image_source, width=300)
         except Exception:
             # If image fails to load, just skip it without showing placeholder
             pass
