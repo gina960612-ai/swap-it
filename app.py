@@ -84,11 +84,14 @@ def local_css() -> None:
         .block-container {
             padding-top: 1.5rem;
             padding-bottom: 1.5rem;
-            max-width: 935px;
+            max-width: 935px !important;
         }
         body {
-            background: #ffffff;
+            background: #ffffff !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .main {
+            background: #ffffff !important;
         }
         
         /* 改善輸入框樣式 */
