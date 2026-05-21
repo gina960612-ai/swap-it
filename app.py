@@ -593,6 +593,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
                     st.image(image_source, use_container_width=True)
                 elif image_source.startswith("http"):
                     st.image(image_source, use_container_width=True)
+                st.markdown("<div style='height: 40px;'></div>", unsafe_allow_html=True)
             with col2:
                 st.markdown("&nbsp;", unsafe_allow_html=True)
         except Exception:
