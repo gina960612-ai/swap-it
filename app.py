@@ -383,7 +383,6 @@ def is_image_path(source: str) -> bool:
 def item_card(item: Item, score: float | None = None, score_label: str = "推薦分數") -> None:
     score_line = f"<div class='muted'>{escape(score_label)}：{score:.1f} · {distance_text(item)}</div>" if score is not None else ""
     image_source = item.image_url if item.image_url else None
-    placeholder_line = f"<div style='width: 100%; height: 320px; background: linear-gradient(135deg, #D4B5E8 0%, #B399CC 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; margin: 15px 0;'>📷</div>"
     
     # 星星評分
     stars = "⭐" * int(item.owner.rating)
@@ -406,10 +405,8 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
             st.image(image_source, use_container_width=True)
         elif image_source.startswith("http") and is_image_path(image_source):
             st.image(image_source, use_container_width=True)
-        else:
-            st.markdown(placeholder_line, unsafe_allow_html=True)
-            st.markdown("<p style='text-align:center; color:#FFFFFF; font-size:1rem; margin-top:-180px;'>已上傳檔案，請使用圖片檔案以顯示預覽。</p>", unsafe_allow_html=True)
     else:
+        placeholder_line = f"<div style='width: 100%; height: 320px; background: linear-gradient(135deg, #D4B5E8 0%, #B399CC 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; margin: 15px 0;'>📷</div>"
         st.markdown(placeholder_line, unsafe_allow_html=True)
     st.markdown(
         "\n".join(
