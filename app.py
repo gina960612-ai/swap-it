@@ -84,10 +84,10 @@ def local_css() -> None:
         .block-container {
             padding-top: 2rem;
             padding-bottom: 2rem;
-            max-width: 1200px;
+            max-width: 1100px;
         }
         body {
-            background: linear-gradient(135deg, #F8F6FC 0%, #FAFAFA 50%, #F5F3FA 100%);
+            background: #fafafa;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
         
@@ -95,89 +95,90 @@ def local_css() -> None:
         .stTextInput > div > div > input,
         .stTextArea > div > div > textarea,
         .stSelectbox > div > div > select {
-            border-radius: 10px;
-            border: 1px solid var(--border-light);
-            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 10px 14px;
             font-size: 0.95rem;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            background: #ffffff;
         }
         .stTextInput > div > div > input:focus,
         .stTextArea > div > div > textarea:focus,
         .stSelectbox > div > div > select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(123, 91, 163, 0.1);
+            border-color: #7B5BA3;
+            box-shadow: 0 0 0 3px rgba(123, 91, 163, 0.08);
         }
 
         /* 🎴 卡片樣式 (核心改版) */
         .swap-card {
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            padding: 16px;
-            background: linear-gradient(135deg, #FFFFFF 0%, #FAFAFA 100%);
+            border: 1px solid rgba(123, 91, 163, 0.08);
+            border-radius: 20px;
+            padding: 20px;
+            background: #FFFFFF;
             min-height: auto;
-            box-shadow: 0 2px 8px rgba(123, 91, 163, 0.08);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .swap-card:hover {
-            box-shadow: 0 4px 16px rgba(123, 91, 163, 0.12);
-            transform: translateY(-2px);
-            border-color: var(--primary-lighter);
+            box-shadow: 0 4px 12px rgba(123, 91, 163, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+            transform: translateY(-1px);
+            border-color: rgba(123, 91, 163, 0.15);
         }
         .swap-card h3 {
-            color: var(--primary-dark);
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0 0 8px 0;
-            letter-spacing: -0.5px;
+            color: #1a1a1a;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 0 0 6px 0;
+            letter-spacing: -0.3px;
         }
 
         /* 文字樣式 */
         .muted {
-            color: #666666;
-            font-size: 0.95rem;
+            color: #6b7280;
+            font-size: 0.9rem;
             font-weight: 400;
         }
         
         /* 區段標題樣式 */
         h1 {
-            color: var(--primary-dark);
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 0.5rem;
-        }
-        h3 {
-            color: var(--primary-dark);
+            color: #111827;
             font-weight: 700;
             letter-spacing: -0.5px;
+            margin-bottom: 0.25rem;
+        }
+        h3 {
+            color: #111827;
+            font-weight: 600;
+            letter-spacing: -0.25px;
         }
 
         /* 📋 請求框樣式 */
         .request-box {
-            border: 1px solid var(--border-light);
-            border-radius: 14px;
-            padding: 20px;
-            background: linear-gradient(135deg, #FFFFFF 0%, #F9F7FF 100%);
-            margin-bottom: 16px;
-            box-shadow: 0 2px 12px rgba(123, 91, 163, 0.1);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(123, 91, 163, 0.1);
+            border-radius: 16px;
+            padding: 18px;
+            background: #FFFFFF;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            transition: all 0.2s ease;
         }
         .request-box:hover {
-            box-shadow: 0 6px 20px rgba(123, 91, 163, 0.18);
-            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(123, 91, 163, 0.08);
+            border-color: rgba(123, 91, 163, 0.2);
         }
 
         /* 💬 聊天列表 */
         .chat-list-title {
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--primary-dark);
-            font-size: 1.15rem;
-            letter-spacing: -0.3px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #111827;
+            font-size: 1.1rem;
+            letter-spacing: -0.25px;
         }
         .chat-list-note {
-            color: #666666;
-            font-size: 0.9rem;
-            margin-bottom: 16px;
+            color: #6b7280;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
             font-weight: 400;
         }
 
@@ -185,92 +186,94 @@ def local_css() -> None:
         div.stButton > button {
             white-space: pre-wrap;
             height: auto;
-            min-height: 2.75rem;
+            min-height: 2.5rem;
             text-align: left;
-            line-height: 1.35;
+            line-height: 1.4;
             border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 4px rgba(123, 91, 163, 0.1);
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
         div.stButton > button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(123, 91, 163, 0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
         div.stButton > button:active {
             transform: translateY(0);
-            box-shadow: 0 1px 2px rgba(123, 91, 163, 0.15);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         /* 📱 主要按鈕 (紫色) */
         [data-testid="baseButton-primary"] {
-            background: linear-gradient(135deg, #7B5BA3 0%, #5A3F7F 100%);
+            background: #7B5BA3;
             color: white;
-            box-shadow: 0 4px 12px rgba(123, 91, 163, 0.3);
+            box-shadow: 0 2px 4px rgba(123, 91, 163, 0.2);
         }
         [data-testid="baseButton-primary"]:hover {
-            background: linear-gradient(135deg, #5A3F7F 0%, #3D2A5F 100%);
-            box-shadow: 0 6px 16px rgba(123, 91, 163, 0.4);
+            background: #6a4e8c;
+            box-shadow: 0 4px 8px rgba(123, 91, 163, 0.3);
         }
         
         /* 改善 expander 樣式 */
         .streamlit-expanderHeader {
-            background: linear-gradient(135deg, #FFFFFF 0%, #F9F7FF 100%);
+            background: #FFFFFF;
             border-radius: 12px;
-            padding: 12px 16px;
-            border: 1px solid var(--border-light);
+            padding: 14px 18px;
+            border: 1px solid rgba(123, 91, 163, 0.1);
+            font-weight: 500;
         }
         
         /* 改善 sidebar 樣式 */
         .css-1d391kg {
-            background: linear-gradient(180deg, #F8F6FC 0%, #FAFAFA 100%);
+            background: #fafafa;
         }
         
         /* 改善分頁標籤樣式 */
         .stTabs [data-baseweb="tab-list"] {
-            gap: 8px;
+            gap: 6px;
         }
         .stTabs [data-baseweb="tab"] {
-            background: linear-gradient(135deg, #FFFFFF 0%, #F9F7FF 100%);
-            border-radius: 10px;
-            border: 1px solid var(--border-light);
-            padding: 8px 16px;
-            font-weight: 600;
+            background: #FFFFFF;
+            border-radius: 8px;
+            border: 1px solid rgba(123, 91, 163, 0.1);
+            padding: 10px 20px;
+            font-weight: 500;
+            color: #6b7280;
         }
         .stTabs [aria-selected="true"] {
-            background: linear-gradient(135deg, #7B5BA3 0%, #5A3F7F 100%);
+            background: #7B5BA3;
             color: white;
-            border-color: var(--primary);
+            border-color: #7B5BA3;
         }
 
         /* 📱 次要按鈕 */
         [data-testid="baseButton-secondary"] {
-            background: linear-gradient(135deg, #E8DDF5 0%, #D4B5E8 100%);
-            color: #5A3F7F;
-            box-shadow: 0 2px 8px rgba(123, 91, 163, 0.15);
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
         [data-testid="baseButton-secondary"]:hover {
-            background: linear-gradient(135deg, #D4B5E8 0%, #B399CC 100%);
-            box-shadow: 0 4px 12px rgba(123, 91, 163, 0.25);
+            background: #e5e7eb;
         }
         
         /* 改善容器樣式 */
         [data-testid="stVerticalBlock"] {
-            gap: 1.5rem;
+            gap: 1.25rem;
         }
         
         /* 改善資訊框樣式 */
         .stAlert {
-            border-radius: 12px;
+            border-radius: 10px;
             border: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+            font-size: 0.95rem;
         }
         
         /* 改善圖片樣式 */
         img {
             border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
         }
 
         /* ✨ 星星評分 */
