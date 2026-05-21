@@ -113,6 +113,7 @@ def create_item(
         latitude=latitude,
         longitude=longitude,
         image_url=image_url.strip(),
+        status="active",
     )
     item.set_seeking_list(seeking_categories or [])
     db.add(item)
