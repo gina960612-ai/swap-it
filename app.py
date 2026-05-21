@@ -391,7 +391,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
     
     # Show inline actions if requested
     if show_actions and user and item.owner_id == user.user_id and item.status == "active":
-        col_name, col_actions = st.columns([3, 1])
+        col_name, col_actions = st.columns([5, 1])
         with col_name:
             st.markdown(
                 f"<h3 style='color: #5A3F7F; margin: 0 0 12px 0;'>{escape(item.name)}</h3>",
