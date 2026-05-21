@@ -125,6 +125,40 @@ def active_user_items(db: Session, user_id: int) -> list[Item]:
     return db.query(Item).filter(Item.owner_id == user_id, Item.status == "active").order_by(Item.created_at.desc()).all()
 
 
+def update_item(
+    db: Session,
+    owner_id: int,
+    item_id: int,
+    name: str,
+    category: str,
+    description: str,
+    location: str,
+    image_url: str = "",
+    latitude: float | None = None,
+    longitude: float | None = None,
+) -> Item:
+    if not name.strip():
+        raise ValueError("請輸入物品名稱")
+
+    item = db.get(Item, item_id)
+    if not item or item.owner_id != owner_id:
+        raise ValueError("找不到這個物品，或你沒有權限編輯")
+    if item.status != "active":
+        raise ValueError("已配對、已完成或已取消的物品不能編輯")
+
+    item.name = name.strip()
+    item.category = category
+    item.description = description.strip()
+    item.location = location.strip()
+    item.latitude = latitude
+    item.longitude = longitude
+    item.image_url = image_url.strip()
+
+    db.commit()
+    db.refresh(item)
+    return item
+
+
 def delete_item(db: Session, owner_id: int, item_id: int) -> None:
     item = db.get(Item, item_id)
     if not item or item.owner_id != owner_id:

@@ -36,6 +36,7 @@ from services import (
     review_match,
     search_items,
     send_message,
+    update_item,
     update_user_profile,
     user_history_matches,
     user_matches,
@@ -402,6 +403,11 @@ def save_uploaded_image(uploaded_file, prefix: str) -> str:
     return upload_path
 
 
+def is_image_path(source: str) -> bool:
+    lower = str(source).lower()
+    return any(lower.endswith(ext) for ext in [".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"])
+
+
 def item_card(item: Item, score: float | None = None, score_label: str = "推薦分數") -> None:
     score_line = f"<div class='muted'>{escape(score_label)}：{score:.1f} · {distance_text(item)}</div>" if score is not None else ""
     image_source = item.image_url if item.image_url else None
@@ -422,10 +428,13 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
         unsafe_allow_html=True,
     )
     if image_source:
-        if os.path.exists(image_source):
-            st.image(image_source, use_column_width=True)
+        if os.path.exists(image_source) and is_image_path(image_source):
+            st.image(image_source, use_container_width=True)
+        elif image_source.startswith("http") and is_image_path(image_source):
+            st.image(image_source, use_container_width=True)
         else:
-            st.image(image_source, use_column_width=True)
+            st.markdown(placeholder_line, unsafe_allow_html=True)
+            st.markdown("<p style='text-align:center; color:#FFFFFF; font-size:1rem; margin-top:-180px;'>已上傳檔案，請使用圖片檔案以顯示預覽。</p>", unsafe_allow_html=True)
     else:
         st.markdown(placeholder_line, unsafe_allow_html=True)
     st.markdown(
@@ -513,8 +522,8 @@ def my_items_page(user: User) -> None:
         category = st.selectbox("分類", list(categories.keys()), format_func=lambda code: categories[code])
         description = st.text_area("物品描述", height=90, placeholder="描述物品的狀態、使用時長等...")
         location = st.selectbox("物品所在縣市", list(TAIWAN_LOCATIONS.keys()), index=4)
-        st.caption("上傳商品圖片（手機可直接拍照），或使用圖片網址。")
-        uploaded_image = st.file_uploader("上傳商品圖片", type=["png", "jpg", "jpeg", "webp"])
+        st.caption("上傳商品圖片或檔案（手機可直接拍照），或使用圖片網址。")
+        uploaded_image = st.file_uploader("上傳商品圖片或檔案", type=None)
         image_url = st.text_input("圖片網址（可不填）", placeholder="例如：https://...")
         if st.button("🚀 刊登物品", type="primary", use_container_width=True):
             try:
@@ -531,6 +540,9 @@ def my_items_page(user: User) -> None:
                 st.error(f"⚠️ {str(exc)}")
 
     st.markdown("<h3 style='color: #7B5BA3;'>你的物品列表</h3>", unsafe_allow_html=True)
+    if "edit_item_id" not in st.session_state:
+        st.session_state.edit_item_id = None
+
     items = db().query(Item).filter(Item.owner_id == user.user_id).order_by(Item.created_at.desc()).all()
     if not items:
         st.info("📭 你還沒有刊登任何物品。")
@@ -556,6 +568,9 @@ def my_items_page(user: User) -> None:
             """, unsafe_allow_html=True)
             
             if item.status == "active":
+                if st.button("✏️ 編輯", use_container_width=True, key=f"edit_item_{item.item_id}"):
+                    st.session_state.edit_item_id = item.item_id
+                    st.rerun()
                 if st.button("🗑️ 刪除", use_container_width=True, key=f"delete_item_{item.item_id}"):
                     try:
                         delete_item(db(), user.user_id, item.item_id)
@@ -565,6 +580,43 @@ def my_items_page(user: User) -> None:
                         st.error(f"⚠️ {str(exc)}")
             else:
                 st.caption("已有交易紀錄\n不能刪除", help="只有交換中的物品可以刪除")
+
+    if st.session_state.edit_item_id:
+        edit_item = db().get(Item, st.session_state.edit_item_id)
+        if not edit_item or edit_item.owner_id != user.user_id or edit_item.status != "active":
+            st.warning("無法編輯此物品，請重新選擇一個可編輯的物品。")
+            st.session_state.edit_item_id = None
+            if st.button("重新整理"): 
+                st.rerun()
+            return
+
+        st.markdown("<h3 style='color: #7B5BA3;'>✏️ 編輯物品</h3>", unsafe_allow_html=True)
+        with st.form("edit_item_form"):
+            name = st.text_input("物品名稱", value=edit_item.name, placeholder="例如：二手桌燈")
+            category = st.selectbox("分類", list(category_options().keys()), index=list(category_options().keys()).index(edit_item.category), format_func=lambda code: category_options()[code])
+            description = st.text_area("物品描述", value=edit_item.description or "", height=90, placeholder="描述物品的狀態、使用時長等...")
+            location = st.selectbox("物品所在縣市", list(TAIWAN_LOCATIONS.keys()), index=list(TAIWAN_LOCATIONS.keys()).index(edit_item.location or list(TAIWAN_LOCATIONS.keys())[0]))
+            st.caption("替換物品圖片或檔案（手機可直接拍照），或使用圖片網址。")
+            uploaded_image = st.file_uploader("替換商品圖片或檔案", type=None)
+            image_url = st.text_input("圖片網址（填寫則會覆蓋現有圖片）", placeholder="例如：https://...")
+            if st.form_submit_button("💾 儲存修改", use_container_width=True):
+                try:
+                    image_path = edit_item.image_url or ""
+                    if uploaded_image is not None:
+                        image_path = save_uploaded_image(uploaded_image, "item")
+                    elif image_url:
+                        image_path = image_url.strip()
+                    latitude, longitude = location_coords(location)
+                    update_item(db(), user.user_id, edit_item.item_id, name, category, description, location, image_path, latitude, longitude)
+                    st.success("✨ 物品已更新！")
+                    st.session_state.edit_item_id = None
+                    st.rerun()
+                except ValueError as exc:
+                    st.error(f"⚠️ {str(exc)}")
+
+        if st.button("取消編輯", use_container_width=True, key="cancel_edit_item"):
+            st.session_state.edit_item_id = None
+            st.rerun()
 
 
 def trade_request_card(request: TradeRequest, viewer_id: int) -> None:
@@ -834,8 +886,8 @@ def profile_page(user: User) -> None:
     if user.full_name:
         st.markdown(f"<p><strong style='color: #5A3F7F;'>正式姓名：</strong> {escape(user.full_name)}</p>", unsafe_allow_html=True)
 
-    st.caption("上傳頭像圖片（手機可直接拍照），或使用網址。")
-    uploaded_avatar = st.file_uploader("上傳頭像圖片", type=["png", "jpg", "jpeg", "webp"])
+    st.caption("上傳頭像圖片或檔案（手機可直接拍照），或使用網址。")
+    uploaded_avatar = st.file_uploader("上傳頭像圖片或檔案", type=None)
     avatar_url = st.text_input("頭像網址（選填）", value=user.avatar_url or "", placeholder="例如：https://...jpg")
 
     with st.form("edit_profile_form"):
@@ -854,7 +906,7 @@ def profile_page(user: User) -> None:
                     avatar_path = avatar_url.strip()
                 update_user_profile(db(), user.user_id, nickname, formal_name, dorm, bio, avatar_path)
                 st.success("✨ 個人資料已更新！")
-                st.experimental_rerun()
+                st.rerun()
             except ValueError as exc:
                 st.error(f"⚠️ {str(exc)}")
 

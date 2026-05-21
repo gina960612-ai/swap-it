@@ -1,3 +1,4 @@
+import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -16,6 +17,7 @@ from services import (
     review_match,
     search_items,
     send_message,
+    update_item,
 )
 
 
@@ -83,6 +85,43 @@ def test_delete_active_item_cancels_pending_requests():
     assert db.get(Item, book.item_id) is None
     assert outgoing_trade_requests(db, kai.user_id)[0].status == "cancelled"
     assert db.get(Item, keyboard.item_id).status == "active"
+
+
+def test_update_active_item_changes_fields():
+    db = make_db()
+    kai = register_user(db, "Kai", "secret1", "secret1", "Kai")
+    item = create_item(db, kai.user_id, "Lamp", "ELE", "Old lamp", "Tainan", [], image_url="https://old.example/lamp.jpg", latitude=23.0, longitude=120.2)
+
+    updated = update_item(
+        db,
+        kai.user_id,
+        item.item_id,
+        "Desk Lamp",
+        "ELE",
+        "New and improved",
+        "Kaohsiung",
+        "https://new.example/lamp.jpg",
+        22.6,
+        120.3,
+    )
+
+    assert updated.name == "Desk Lamp"
+    assert updated.description == "New and improved"
+    assert updated.location == "Kaohsiung"
+    assert updated.image_url == "https://new.example/lamp.jpg"
+    assert updated.latitude == 22.6
+    assert updated.longitude == 120.3
+
+
+def test_update_item_requires_active_status():
+    db = make_db()
+    kai = register_user(db, "Kai", "secret1", "secret1", "Kai")
+    item = create_item(db, kai.user_id, "Lamp", "ELE", "Old lamp", "Tainan", [])
+    item.status = "matched"
+    db.commit()
+
+    with pytest.raises(ValueError):
+        update_item(db, kai.user_id, item.item_id, "Desk Lamp", "ELE", "New description", "Kaohsiung", "", 22.6, 120.3)
 
 
 def test_accept_trade_request_creates_match_and_chat():
