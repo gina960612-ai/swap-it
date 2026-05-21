@@ -82,58 +82,60 @@ def local_css() -> None:
 
         /* 全局樣式 */
         .block-container {
-            padding-top: 1.5rem;
-            padding-bottom: 1.5rem;
-            max-width: 935px !important;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            max-width: 1100px !important;
         }
         body {
-            background: #ffffff !important;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%) !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
         .main {
-            background: #ffffff !important;
+            background: transparent !important;
         }
         
         /* 改善輸入框樣式 */
         .stTextInput > div > div > input,
         .stTextArea > div > div > textarea,
         .stSelectbox > div > div > select {
-            border-radius: 0;
-            border: 1px solid #dbdbdb;
-            padding: 8px 12px;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-            background: #fafafa;
+            border-radius: 12px;
+            border: 1px solid rgba(123, 91, 163, 0.2);
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(123, 91, 163, 0.08);
         }
         .stTextInput > div > div > input:focus,
         .stTextArea > div > div > textarea:focus,
         .stSelectbox > div > div > select:focus {
-            border-color: #262626;
-            box-shadow: none;
+            border-color: #7B5BA3;
+            box-shadow: 0 4px 12px rgba(123, 91, 163, 0.15);
             background: #ffffff;
         }
 
         /* 🎴 卡片樣式 (核心改版) */
         .swap-card {
-            border: 1px solid #dbdbdb;
-            border-radius: 3px;
-            padding: 16px;
+            border: 1px solid rgba(123, 91, 163, 0.15);
+            border-radius: 16px;
+            padding: 20px;
             background: #ffffff;
             min-height: auto;
-            box-shadow: none;
-            transition: all 0.2s ease;
-            margin-bottom: 16px;
+            box-shadow: 0 4px 16px rgba(123, 91, 163, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 20px;
         }
         .swap-card:hover {
-            box-shadow: none;
-            transform: none;
+            box-shadow: 0 8px 24px rgba(123, 91, 163, 0.12);
+            transform: translateY(-2px);
+            border-color: rgba(123, 91, 163, 0.25);
         }
         .swap-card h3 {
-            color: #262626;
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 0 0 8px 0;
-            letter-spacing: 0;
+            color: #2C2C2C;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            letter-spacing: -0.3px;
         }
 
         /* 文字樣式 */
@@ -145,14 +147,18 @@ def local_css() -> None:
         
         /* 區段標題樣式 */
         h1 {
-            color: #111827;
-            font-weight: 700;
+            color: #7B5BA3;
+            font-weight: 800;
             letter-spacing: -0.5px;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #7B5BA3 0%, #9B7BB4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         h3 {
-            color: #111827;
-            font-weight: 600;
+            color: #5A3F7F;
+            font-weight: 700;
             letter-spacing: -0.25px;
         }
 
@@ -190,99 +196,103 @@ def local_css() -> None:
         div.stButton > button {
             white-space: pre-wrap;
             height: auto;
-            min-height: 2rem;
+            min-height: 44px;
             text-align: center;
-            line-height: 1.3;
+            line-height: 1.4;
             border: none;
-            border-radius: 4px;
+            border-radius: 12px;
             font-weight: 600;
-            transition: all 0.2s ease;
-            box-shadow: none;
-            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(123, 91, 163, 0.15);
+            font-size: 0.95rem;
         }
         div.stButton > button:hover {
-            transform: none;
-            box-shadow: none;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(123, 91, 163, 0.25);
         }
         div.stButton > button:active {
-            transform: none;
-            box-shadow: none;
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(123, 91, 163, 0.15);
         }
 
-        /* 📱 主要按鈕 (Instagram藍色) */
+        /* 📱 主要按鈕 (紫色漸層) */
         [data-testid="baseButton-primary"] {
-            background: #0095f6;
+            background: linear-gradient(135deg, #7B5BA3 0%, #9B7BB4 100%);
             color: white;
-            box-shadow: none;
+            box-shadow: 0 4px 16px rgba(123, 91, 163, 0.3);
         }
         [data-testid="baseButton-primary"]:hover {
-            background: #0074cc;
-            box-shadow: none;
+            background: linear-gradient(135deg, #6a4e8c 0%, #8a6aa3 100%);
+            box-shadow: 0 6px 24px rgba(123, 91, 163, 0.4);
         }
         
         /* 改善 expander 樣式 */
         .streamlit-expanderHeader {
-            background: #fafafa;
-            border-radius: 0;
-            padding: 12px 16px;
-            border: 1px solid #dbdbdb;
+            background: linear-gradient(135deg, #f8f6fc 0%, #f0eaf8 100%);
+            border-radius: 12px;
+            padding: 16px 20px;
+            border: 1px solid rgba(123, 91, 163, 0.2);
             font-weight: 600;
-            color: #262626;
+            color: #5A3F7F;
+            box-shadow: 0 2px 8px rgba(123, 91, 163, 0.08);
         }
         
         /* 改善 sidebar 樣式 */
         .css-1d391kg {
-            background: #ffffff;
+            background: linear-gradient(180deg, #f8f6fc 0%, #f0eaf8 100%);
         }
         
         /* 改善分頁標籤樣式 */
         .stTabs [data-baseweb="tab-list"] {
-            gap: 0;
-            border-bottom: 1px solid #dbdbdb;
+            gap: 8px;
+            border-bottom: 2px solid rgba(123, 91, 163, 0.1);
+            padding-bottom: 8px;
         }
         .stTabs [data-baseweb="tab"] {
             background: transparent;
-            border-radius: 0;
+            border-radius: 8px;
             border: none;
-            padding: 12px 20px;
+            padding: 12px 24px;
             font-weight: 600;
             color: #8e8e8e;
-            border-bottom: 1px solid transparent;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
         }
         .stTabs [aria-selected="true"] {
-            background: transparent;
-            color: #262626;
-            border-color: #262626;
+            background: rgba(123, 91, 163, 0.1);
+            color: #7B5BA3;
+            border-color: #7B5BA3;
         }
 
         /* 📱 次要按鈕 */
         [data-testid="baseButton-secondary"] {
-            background: transparent;
-            color: #262626;
-            border: 1px solid #dbdbdb;
+            background: #ffffff;
+            color: #7B5BA3;
+            border: 2px solid rgba(123, 91, 163, 0.3);
         }
         [data-testid="baseButton-secondary"]:hover {
-            background: #fafafa;
+            background: rgba(123, 91, 163, 0.05);
+            border-color: rgba(123, 91, 163, 0.5);
         }
         
         /* 改善容器樣式 */
         [data-testid="stVerticalBlock"] {
-            gap: 1rem;
+            gap: 1.25rem;
         }
         
         /* 改善資訊框樣式 */
         .stAlert {
-            border-radius: 0;
-            border: 1px solid #dbdbdb;
-            box-shadow: none;
-            font-size: 0.9rem;
-            background: #fafafa;
+            border-radius: 12px;
+            border: 1px solid rgba(123, 91, 163, 0.2);
+            box-shadow: 0 4px 12px rgba(123, 91, 163, 0.08);
+            font-size: 0.95rem;
+            background: linear-gradient(135deg, #f8f6fc 0%, #f0eaf8 100%);
         }
         
         /* 改善圖片樣式 */
         img {
-            border-radius: 0;
-            box-shadow: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(123, 91, 163, 0.12);
         }
 
         /* ✨ 星星評分 */
@@ -591,11 +601,11 @@ def offer_request_actions(user: User, target_item: Item, key_prefix: str) -> Non
 
 
 def browse_page(user: User) -> None:
-    st.markdown("<h1 style='color: #111827;'>瀏覽物品</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #7B5BA3;'>瀏覽物品</h1>", unsafe_allow_html=True)
     st.markdown("<p style='color: #6b7280; font-size: 0.95rem;'>找到喜歡的物品？用你的物品送出交換請求吧！</p>", unsafe_allow_html=True)
     latitude, longitude = current_coords()
 
-    st.markdown("<h3 style='color: #111827; font-size: 1.1rem; font-weight: 600;'>搜尋物品</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600;'>搜尋物品</h3>", unsafe_allow_html=True)
     query = st.text_input("搜尋", placeholder="例如：桌燈、電子產品、臺南市、陳小明")
     if query.strip():
         results = search_items(db(), user.user_id, query, limit=20, current_latitude=latitude, current_longitude=longitude)
@@ -604,12 +614,12 @@ def browse_page(user: User) -> None:
             return
         st.success(f"找到 {len(results)} 筆結果，已依符合程度與距離排序。")
         for index, (item, score) in enumerate(results, start=1):
-            st.markdown(f"<h4 style='color: #111827; font-size: 1rem; font-weight: 600;'>搜尋結果 {index}</h4>", unsafe_allow_html=True)
+            st.markdown(f"<h4 style='color: #5A3F7F; font-size: 1rem; font-weight: 600;'>搜尋結果 {index}</h4>", unsafe_allow_html=True)
             item_card(item, score, score_label="排序分數")
             offer_request_actions(user, item, key_prefix=f"search_{index}")
         return
 
-    st.markdown("<h3 style='color: #111827; font-size: 1.1rem; font-weight: 600;'>推薦給你</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600;'>推薦給你</h3>", unsafe_allow_html=True)
     recommendations = get_recommendations(db(), user.user_id, limit=1, current_latitude=latitude, current_longitude=longitude)
     if not recommendations:
         st.info("目前沒有新的推薦。你可以新增物品、換一個位置，或查看已送出的交換請求。")
@@ -621,14 +631,14 @@ def browse_page(user: User) -> None:
 
 
 def my_items_page(user: User) -> None:
-    st.markdown("<h1 style='color: #111827;'>我的物品</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #7B5BA3;'>我的物品</h1>", unsafe_allow_html=True)
     
     # 搜尋功能 - 放在最上方
-    st.markdown("<h4 style='color: #111827; font-size: 1rem; font-weight: 600;'>搜尋你的物品</h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='color: #5A3F7F; font-size: 1rem; font-weight: 600;'>搜尋你的物品</h4>", unsafe_allow_html=True)
     search_query = st.text_input("輸入物品名稱或描述...", placeholder="例如：水壺、二手...", key="my_items_search")
     
     with st.expander("新增物品", expanded=False):
-        st.markdown("<h4 style='color: #111827; font-size: 1rem; font-weight: 600;'>刊登新物品</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: #5A3F7F; font-size: 1rem; font-weight: 600;'>刊登新物品</h4>", unsafe_allow_html=True)
         categories = category_options()
         name = st.text_input("物品名稱", placeholder="例如：二手桌燈")
         category = st.selectbox("分類", list(categories.keys()), format_func=lambda code: categories[code])
@@ -650,7 +660,7 @@ def my_items_page(user: User) -> None:
             except ValueError as exc:
                 st.error(f"{str(exc)}")
 
-    st.markdown("<h3 style='color: #111827; font-size: 1.1rem; font-weight: 600;'>你的物品列表</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600;'>你的物品列表</h3>", unsafe_allow_html=True)
     if "edit_item_id" not in st.session_state:
         st.session_state.edit_item_id = None
 
@@ -682,7 +692,7 @@ def my_items_page(user: User) -> None:
                 st.rerun()
             return
 
-        st.markdown("<h3 style='color: #111827; font-size: 1.1rem; font-weight: 600;'>編輯物品</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600;'>編輯物品</h3>", unsafe_allow_html=True)
         with st.form("edit_item_form"):
             name = st.text_input("物品名稱", value=edit_item.name, placeholder="例如：二手桌燈")
             category = st.selectbox("分類", list(category_options().keys()), index=list(category_options().keys()).index(edit_item.category), format_func=lambda code: category_options()[code])
@@ -928,7 +938,7 @@ def chat_view(user: User) -> None:
 
 
 def requests_and_chat_page(user: User) -> None:
-    st.markdown("<h1 style='color: #111827;'>交換請求與聊天</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #7B5BA3;'>交換請求與聊天</h1>", unsafe_allow_html=True)
     incoming_count, rejected_count = notification_counts(db(), user.user_id)
     st.markdown(f"<p style='color: #6b7280;'>收到待回覆：<strong style='color: #FF69B4;'>{incoming_count}</strong> · 被拒絕通知：<strong style='color: #FF6B9D;'>{rejected_count}</strong></p>", unsafe_allow_html=True)
     
@@ -942,7 +952,7 @@ def requests_and_chat_page(user: User) -> None:
 
 
 def profile_page(user: User) -> None:
-    st.markdown("<h1 style='color: #111827;'>個人資料</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #7B5BA3;'>個人資料</h1>", unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -1013,7 +1023,7 @@ def profile_page(user: User) -> None:
 
 
 def history_page(user: User) -> None:
-    st.markdown("<h1 style='color: #111827;'>歷史交易</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #7B5BA3;'>歷史交易</h1>", unsafe_allow_html=True)
     st.markdown("<p style='color: #6b7280;'>查看所有已完成和已取消的交易紀錄。</p>", unsafe_allow_html=True)
     
     history_matches = user_history_matches(db(), user.user_id)
@@ -1027,7 +1037,7 @@ def history_page(user: User) -> None:
     
     # 已完成的交易
     if completed_matches:
-        st.markdown("<h2 style='color: #262626;'>已完成的交易</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='color: #5A3F7F;'>已完成的交易</h2>", unsafe_allow_html=True)
         for match in completed_matches:
             mine, theirs = match_items_for_user(match, user.user_id)
             other = db().get(User, match.other_user_id(user.user_id))
@@ -1038,8 +1048,8 @@ def history_page(user: User) -> None:
                 col1, col2 = st.columns([3, 1])
                 
                 with col1:
-                    st.markdown(f"<h4 style='color: #262626; margin: 0;'>{escape(mine.name)} ↔ {escape(theirs.name)}</h4>", unsafe_allow_html=True)
-                    st.markdown(f"<p style='color: #8e8e8e; margin: 8px 0;'>{escape(other.name)} · {other.rating:.1f}</p>", unsafe_allow_html=True)
+                    st.markdown(f"<h4 style='color: #5A3F7F; margin: 0;'>{escape(mine.name)} ↔ {escape(theirs.name)}</h4>", unsafe_allow_html=True)
+                    st.markdown(f"<p style='color: #6b7280; margin: 8px 0;'>{escape(other.name)} · {other.rating:.1f}</p>", unsafe_allow_html=True)
                     st.caption(f"完成時間：{match.completed_at.strftime('%Y-%m-%d %H:%M')}")
                 
                 with col2:
@@ -1084,14 +1094,14 @@ def history_page(user: User) -> None:
     
     # 已取消的交易
     if cancelled_matches:
-        st.markdown("<h2 style='color: #262626;'>已取消的交易</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='color: #5A3F7F;'>已取消的交易</h2>", unsafe_allow_html=True)
         for match in cancelled_matches:
             mine, theirs = match_items_for_user(match, user.user_id)
             other = db().get(User, match.other_user_id(user.user_id))
             
             with st.container(border=True):
-                st.markdown(f"<h4 style='color: #262626;'>{escape(mine.name)} ↔ {escape(theirs.name)}</h4>", unsafe_allow_html=True)
-                st.markdown(f"<p style='color: #8e8e8e;'>{escape(other.name)}</p>", unsafe_allow_html=True)
+                st.markdown(f"<h4 style='color: #5A3F7F;'>{escape(mine.name)} ↔ {escape(theirs.name)}</h4>", unsafe_allow_html=True)
+                st.markdown(f"<p style='color: #6b7280;'>{escape(other.name)}</p>", unsafe_allow_html=True)
                 st.caption(f"取消時間：{match.updated_at.strftime('%Y-%m-%d %H:%M')}")
 
 
