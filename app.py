@@ -165,6 +165,9 @@ def local_css() -> None:
             color: #6b7280;
             font-size: 0.9rem;
             font-weight: 400;
+            line-height: 1.6;
+            display: block;
+            margin-bottom: 8px;
         }
         
         /* 區段標題樣式 */
