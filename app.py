@@ -80,6 +80,20 @@ def local_css() -> None:
             --border-light: #E8DDF5;
         }
 
+        /* 強制背景顏色 */
+        [data-testid="stAppViewContainer"] > div {
+            background-color: #e8d5ff !important;
+        }
+        [data-testid="stAppViewContainer"] {
+            background-color: #e8d5ff !important;
+        }
+        .main {
+            background-color: #e8d5ff !important;
+        }
+        body {
+            background-color: #e8d5ff !important;
+        }
+
         /* 全局樣式 */
         .block-container {
             padding-top: 2rem;
