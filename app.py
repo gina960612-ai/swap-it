@@ -603,17 +603,27 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
     
     # No placeholder shown even when there's no image
     st.markdown(
-        "\n".join(
-            [
-                f"<p style='color: #2C2C2C; line-height: 1.6; margin-bottom: 32px;'>{escape(item.description or '尚未填寫描述。')}</p>",
-                f"<div style='display: flex; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 1px solid #E8DDF5; margin-top: 20px;'>",
-                f"<div style='color: #888; font-size: 0.9rem;'><strong style='color: #5A3F7F;'>{escape(item.owner.name)}</strong></div>",
-                f"<div style='color: #FFD700; font-size: 1.1rem;'>{stars}</div>",
-                "</div>",
-            ]
-        ),
+        f"<p style='color: #2C2C2C; line-height: 1.6; margin-bottom: 32px;'>{escape(item.description or '尚未填寫描述。')}</p>",
         unsafe_allow_html=True,
     )
+    
+    with st.container():
+        st.markdown(
+            f"<div style='display: flex; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 1px solid #E8DDF5; margin-top: 20px;'>",
+            unsafe_allow_html=True,
+        )
+        col1, col2 = st.columns([2, 1])
+        with col1:
+            st.markdown(
+                f"<div style='color: #888; font-size: 0.9rem;'><strong style='color: #5A3F7F;'>{escape(item.owner.name)}</strong></div>",
+                unsafe_allow_html=True,
+            )
+        with col2:
+            st.markdown(
+                f"<div style='color: #FFD700; font-size: 1.1rem;'>{stars}</div>",
+                unsafe_allow_html=True,
+            )
+        st.markdown("</div>", unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 
