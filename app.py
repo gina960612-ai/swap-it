@@ -143,7 +143,7 @@ def local_css() -> None:
             padding: 20px;
             background: #ffffff;
             min-height: auto;
-            box-shadow: 0 4px 16px rgba(123, 91, 163, 0.08);
+            box-shadow: none;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             margin-bottom: 20px;
             margin-top: 0;
@@ -642,7 +642,7 @@ def browse_page(user: User) -> None:
     st.markdown("<p style='color: #6b7280; font-size: 0.95rem;'>找到喜歡的物品？用你的物品送出交換請求吧！</p>", unsafe_allow_html=True)
     latitude, longitude = current_coords()
 
-    st.markdown("<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600;'>搜尋物品</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #5A3F7F; font-size: 1.5rem; font-weight: 600;'>搜尋物品</h3>", unsafe_allow_html=True)
     query = st.text_input("搜尋", placeholder="例如：桌燈、電子產品、臺南市、陳小明")
     if query.strip():
         results = search_items(db(), user.user_id, query, limit=20, current_latitude=latitude, current_longitude=longitude)
@@ -656,7 +656,7 @@ def browse_page(user: User) -> None:
             offer_request_actions(user, item, key_prefix=f"search_{index}")
         return
 
-    st.markdown("<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600; margin-bottom: 0;'>推薦給你</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color: #5A3F7F; font-size: 1.5rem; font-weight: 600; margin-bottom: 0;'>推薦給你</h3>", unsafe_allow_html=True)
     recommendations = get_recommendations(db(), user.user_id, limit=1, current_latitude=latitude, current_longitude=longitude)
     if not recommendations:
         st.info("目前沒有新的推薦。你可以新增物品、換一個位置，或查看已送出的交換請求。")
