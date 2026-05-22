@@ -701,40 +701,33 @@ def my_items_page(user: User) -> None:
     
     with st.expander("新增物品", expanded=False):
         st.markdown("<h4 style='color: #5A3F7F; font-size: 1rem; font-weight: 600;'>刊登新物品</h4>", unsafe_allow_html=True)
-        with st.form("add_item_form"):
+        # 使用 session state 來追蹤表單是否需要重置
+        if "add_item_form_key" not in st.session_state:
+            st.session_state.add_item_form_key = 0
+        
+        with st.form("add_item_form", key=f"add_item_form_{st.session_state.add_item_form_key}"):
             categories = category_options()
-            name = st.text_input("物品名稱", placeholder="例如：二手桌燈")
-            category = st.selectbox("分類", list(categories.keys()), format_func=lambda code: categories[code])
-            description = st.text_area("物品描述", height=90, placeholder="描述物品的狀態、使用時長等...")
-            location = st.selectbox("物品所在縣市", list(TAIWAN_LOCATIONS.keys()), index=4)
+            name = st.text_input("物品名稱", placeholder="例如：二手桌燈", key="add_item_name")
+            category = st.selectbox("分類", list(categories.keys()), format_func=lambda code: categories[code], key="add_item_category")
+            description = st.text_area("物品描述", height=90, placeholder="描述物品的狀態、使用時長等...", key="add_item_description")
+            location = st.selectbox("物品所在縣市", list(TAIWAN_LOCATIONS.keys()), index=4, key="add_item_location")
             st.caption("上傳商品圖片或檔案（手機可直接拍照），或使用圖片網址。")
-            uploaded_image = st.file_uploader("上傳商品圖片或檔案", type=None)
-            image_url = st.text_input("圖片網址（可不填）", placeholder="例如：https://...")
+            uploaded_image = st.file_uploader("上傳商品圖片或檔案", type=None, key="add_item_image")
+            image_url = st.text_input("圖片網址（可不填）", placeholder="例如：https://...", key="add_item_image_url")
             submitted = st.form_submit_button("刊登物品", type="primary", use_container_width=True)
             if submitted:
                 try:
-                    # 檢查是否在短時間內已經有相同物品
-                    from datetime import datetime, timedelta
-                    db_session = db()
-                    recent_item = db_session.query(Item).filter(
-                        Item.owner_id == user.user_id,
-                        Item.name == name.strip(),
-                        Item.category == category,
-                        Item.created_at >= datetime.now() - timedelta(seconds=5)
-                    ).first()
-                    
-                    if recent_item:
-                        st.warning("您剛剛已經刊登過相同的物品，請勿重複提交。")
-                    else:
-                        image_path = ""
-                        if uploaded_image is not None:
-                            image_path = save_uploaded_image(uploaded_image, "item")
-                        elif image_url:
-                            image_path = image_url.strip()
-                        latitude, longitude = location_coords(location)
-                        create_item(db(), user.user_id, name, category, description, location, [], image_path, latitude, longitude)
-                        st.success("物品已成功刊登！")
-                        st.rerun()
+                    image_path = ""
+                    if uploaded_image is not None:
+                        image_path = save_uploaded_image(uploaded_image, "item")
+                    elif image_url:
+                        image_path = image_url.strip()
+                    latitude, longitude = location_coords(location)
+                    create_item(db(), user.user_id, name, category, description, location, [], image_path, latitude, longitude)
+                    st.success("物品已成功刊登！")
+                    # 增加表單鍵值以重置表單
+                    st.session_state.add_item_form_key += 1
+                    st.rerun()
                 except ValueError as exc:
                     st.error(f"{str(exc)}")
 
