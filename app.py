@@ -713,15 +713,28 @@ def my_items_page(user: User) -> None:
             submitted = st.form_submit_button("刊登物品", type="primary", use_container_width=True)
             if submitted:
                 try:
-                    image_path = ""
-                    if uploaded_image is not None:
-                        image_path = save_uploaded_image(uploaded_image, "item")
-                    elif image_url:
-                        image_path = image_url.strip()
-                    latitude, longitude = location_coords(location)
-                    create_item(db(), user.user_id, name, category, description, location, [], image_path, latitude, longitude)
-                    st.success("物品已成功刊登！")
-                    st.rerun()
+                    # 檢查是否在短時間內已經有相同物品
+                    from datetime import datetime, timedelta
+                    db_session = db()
+                    recent_item = db_session.query(Item).filter(
+                        Item.owner_id == user.user_id,
+                        Item.name == name.strip(),
+                        Item.category == category,
+                        Item.created_at >= datetime.now() - timedelta(seconds=5)
+                    ).first()
+                    
+                    if recent_item:
+                        st.warning("您剛剛已經刊登過相同的物品，請勿重複提交。")
+                    else:
+                        image_path = ""
+                        if uploaded_image is not None:
+                            image_path = save_uploaded_image(uploaded_image, "item")
+                        elif image_url:
+                            image_path = image_url.strip()
+                        latitude, longitude = location_coords(location)
+                        create_item(db(), user.user_id, name, category, description, location, [], image_path, latitude, longitude)
+                        st.success("物品已成功刊登！")
+                        st.rerun()
                 except ValueError as exc:
                     st.error(f"{str(exc)}")
 
