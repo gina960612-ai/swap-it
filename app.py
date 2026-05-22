@@ -601,7 +601,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
     
     # No placeholder shown even when there's no image
     st.markdown(
-        f"<p style='color: #2C2C2C; line-height: 1.6; margin-bottom: 0px; margin-top: 8px;'>{escape(item.description or '尚未填寫描述。')}</p>",
+        f"<p style='color: #2C2C2C; line-height: 1.6; margin-bottom: 0px; margin-top: 0px;'>{escape(item.description or '尚未填寫描述。')}</p>",
         unsafe_allow_html=True,
     )
     
