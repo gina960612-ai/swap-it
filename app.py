@@ -703,6 +703,11 @@ def my_items_page(user: User) -> None:
     if "add_item_expanded" not in st.session_state:
         st.session_state.add_item_expanded = False
     
+    # 如果剛剛成功刊登物品，重置展開器狀態
+    if "add_item_success" in st.session_state and st.session_state.add_item_success:
+        st.session_state.add_item_expanded = False
+        st.session_state.add_item_success = False
+    
     with st.expander("新增物品", expanded=st.session_state.add_item_expanded):
         st.markdown("<h4 style='color: #5A3F7F; font-size: 1rem; font-weight: 600;'>刊登新物品</h4>", unsafe_allow_html=True)
         with st.form("add_item_form"):
@@ -725,8 +730,8 @@ def my_items_page(user: User) -> None:
                     latitude, longitude = location_coords(location)
                     create_item(db(), user.user_id, name, category, description, location, [], image_path, latitude, longitude)
                     st.success("物品已成功刊登！")
-                    # 收起展開器並重新整理
-                    st.session_state.add_item_expanded = False
+                    # 設定成功標誌並重新整理
+                    st.session_state.add_item_success = True
                     st.rerun()
                 except ValueError as exc:
                     st.error(f"{str(exc)}")
