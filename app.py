@@ -919,6 +919,10 @@ def incoming_requests_view(user: User) -> None:
         st.info("目前沒有等待你回覆的交換請求。")
         return
     
+    # Show toast notification for new requests
+    if len(requests) > 0:
+        st.toast(f"您有 {len(requests)} 個新的交換請求待回覆", icon="🔔")
+    
     st.markdown(f"<p style='color: #888;'>收到 <strong style='color: #FF69B4;'>{len(requests)}</strong> 個新請求</p>", unsafe_allow_html=True)
     for request in requests:
         trade_request_card(request, user.user_id)
@@ -1018,33 +1022,14 @@ def chat_view(user: User) -> None:
 
         st.divider()
         
-        # 聊天氣泡
+        # 聊天氣泡 - 使用 st.chat_message
         room = match.chat_room
         if room and room.messages:
             for message in room.messages:
-                sender = "你" if message.sender_id == user.user_id else message.sender.name
                 is_own_message = message.sender_id == user.user_id
-                
-                if is_own_message:
-                    col1, col2 = st.columns([1, 3])
-                    with col2:
-                        st.markdown(f"""
-                        <div style='background: linear-gradient(135deg, #7B5BA3 0%, #5A3F7F 100%); color: white; padding: 12px 16px; border-radius: 14px; margin-bottom: 8px;'>
-                        <p style='margin: 0; font-weight: 500;'>{escape(sender)}</p>
-                        <p style='margin: 8px 0 4px 0;'>{escape(message.content)}</p>
-                        <p style='margin: 0; font-size: 0.8rem; opacity: 0.8;'>{message.created_at.strftime('%H:%M')}</p>
-                        </div>
-                        """, unsafe_allow_html=True)
-                else:
-                    col1, col2 = st.columns([3, 1])
-                    with col1:
-                        st.markdown(f"""
-                        <div style='background: #F5F3FA; color: #2C2C2C; padding: 12px 16px; border-radius: 14px; margin-bottom: 8px; border-left: 3px solid #7B5BA3;'>
-                        <p style='margin: 0; font-weight: 500;'>{escape(sender)}</p>
-                        <p style='margin: 8px 0 4px 0;'>{escape(message.content)}</p>
-                        <p style='margin: 0; font-size: 0.8rem; color: #888;'>{message.created_at.strftime('%H:%M')}</p>
-                        </div>
-                        """, unsafe_allow_html=True)
+                with st.chat_message("user" if is_own_message else "assistant", name="你" if is_own_message else other.name, avatar="👤" if not is_own_message else None):
+                    st.markdown(f"{escape(message.content)}")
+                    st.caption(message.created_at.strftime('%H:%M'))
 
         if match.status == "active":
             st.divider()
