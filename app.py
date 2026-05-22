@@ -546,7 +546,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
     # 星星評分
     stars = "⭐" * int(item.owner.rating)
 
-    st.markdown('<div class="swap-card">', unsafe_allow_html=True)
+    st.markdown("<div style='border: 2px solid #E8DDF5; border-radius: 16px; padding: 16px; background: #FAF8FF; min-height: auto; box-shadow: 0 4px 12px rgba(123, 91, 163, 0.15); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); margin-bottom: 24px; margin-top: 0;'>", unsafe_allow_html=True)
     
     # Show inline actions if requested
     if show_actions and user and item.owner_id == user.user_id and item.status == "active":
