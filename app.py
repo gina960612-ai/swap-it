@@ -699,7 +699,11 @@ def my_items_page(user: User) -> None:
     st.markdown("<h4 style='color: #5A3F7F; font-size: 1rem; font-weight: 600;'>搜尋你的物品</h4>", unsafe_allow_html=True)
     search_query = st.text_input("輸入物品名稱或描述...", placeholder="例如：水壺、二手...", key="my_items_search")
     
-    with st.expander("新增物品", expanded=False):
+    # 控制新增物品展開器的狀態
+    if "add_item_expanded" not in st.session_state:
+        st.session_state.add_item_expanded = False
+    
+    with st.expander("新增物品", expanded=st.session_state.add_item_expanded):
         st.markdown("<h4 style='color: #5A3F7F; font-size: 1rem; font-weight: 600;'>刊登新物品</h4>", unsafe_allow_html=True)
         with st.form("add_item_form"):
             categories = category_options()
@@ -721,6 +725,8 @@ def my_items_page(user: User) -> None:
                     latitude, longitude = location_coords(location)
                     create_item(db(), user.user_id, name, category, description, location, [], image_path, latitude, longitude)
                     st.success("物品已成功刊登！")
+                    # 收起展開器並重新整理
+                    st.session_state.add_item_expanded = False
                     st.rerun()
                 except ValueError as exc:
                     st.error(f"{str(exc)}")
