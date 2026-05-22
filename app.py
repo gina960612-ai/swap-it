@@ -553,7 +553,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
         col_name, col_actions = st.columns([5, 1])
         with col_name:
             st.markdown(
-                f"<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600; margin: 0 0 12px 0;'>{escape(item.name)}</h3>",
+                f"<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600; margin: 0 0 20px 0;'>{escape(item.name)}</h3>",
                 unsafe_allow_html=True,
             )
         with col_actions:
@@ -572,7 +572,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
                         st.error(f"{str(exc)}")
     else:
         st.markdown(
-            f"<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600; margin: 0 0 12px 0;'>{escape(item.name)}</h3>",
+            f"<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600; margin: 0 0 20px 0;'>{escape(item.name)}</h3>",
             unsafe_allow_html=True,
         )
     
