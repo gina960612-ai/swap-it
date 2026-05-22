@@ -630,6 +630,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
 def offer_request_actions(user: User, target_item: Item, key_prefix: str) -> None:
     my_items = active_user_items(db(), user.user_id)
     if not my_items:
+        st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
         st.info("你需要先在「我的物品」刊登至少一個交換中的物品，才能送出交換請求。")
         return
 
