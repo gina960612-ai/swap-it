@@ -609,7 +609,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
     
     with st.container():
         st.markdown(
-            f"<div style='display: flex; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 1px solid #E8DDF5; margin-top: 20px;'>",
+            f"<div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;'>",
             unsafe_allow_html=True,
         )
         col1, col2 = st.columns([2, 1])
@@ -624,6 +624,10 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
                 unsafe_allow_html=True,
             )
         st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown(
+            f"<div style='border-top: 1px solid #E8DDF5; margin-top: 10px;'></div>",
+            unsafe_allow_html=True,
+        )
     st.markdown('</div>', unsafe_allow_html=True)
 
 
