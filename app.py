@@ -680,13 +680,19 @@ def browse_page(user: User) -> None:
             categories = category_options()
             category_options_list = ["全部"] + list(categories.keys())
             current_category = st.session_state.get("category_filter", "全部")
-            category_index = category_options_list.index(current_category) if current_category in category_options_list else 0
+            try:
+                category_index = category_options_list.index(current_category)
+            except ValueError:
+                category_index = 0
             category_filter = st.selectbox("物品類別", category_options_list, format_func=lambda code: categories[code] if code != "全部" else "全部", key="category_filter", index=category_index)
         with col3:
             locations = list(TAIWAN_LOCATIONS.keys())
             location_options_list = ["全部"] + locations
             current_location = st.session_state.get("location_filter", "全部")
-            location_index = location_options_list.index(current_location) if current_location in location_options_list else 0
+            try:
+                location_index = location_options_list.index(current_location)
+            except ValueError:
+                location_index = 0
             location_filter = st.selectbox("地區", location_options_list, key="location_filter", index=location_index)
     
     # Use session state to store filter values
