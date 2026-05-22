@@ -695,9 +695,10 @@ def browse_page(user: User) -> None:
             return
         st.success(f"找到 {len(results)} 筆結果，已依符合程度與距離排序。")
         for index, (item, score) in enumerate(results, start=1):
-            st.markdown(f"<h4 style='color: #5A3F7F; font-size: 1rem; font-weight: 600;'>搜尋結果 {index}</h4>", unsafe_allow_html=True)
-            item_card(item, score, score_label="排序分數")
-            offer_request_actions(user, item, key_prefix=f"search_{index}")
+            with st.container(border=True):
+                st.markdown(f"<h4 style='color: #5A3F7F; font-size: 1rem; font-weight: 600;'>搜尋結果 {index}</h4>", unsafe_allow_html=True)
+                item_card(item, score, score_label="排序分數")
+                offer_request_actions(user, item, key_prefix=f"search_{index}")
         return
 
     st.markdown("<h3 style='color: #5A3F7F; font-size: 1.5rem; font-weight: 600; margin-bottom: 0;'>推薦給你</h3>", unsafe_allow_html=True)
@@ -707,8 +708,9 @@ def browse_page(user: User) -> None:
         return
 
     item, score = recommendations[0]
-    item_card(item, score)
-    offer_request_actions(user, item, key_prefix="recommendation")
+    with st.container(border=True):
+        item_card(item, score)
+        offer_request_actions(user, item, key_prefix="recommendation")
 
 
 def my_items_page(user: User) -> None:
