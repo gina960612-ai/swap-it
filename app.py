@@ -667,58 +667,28 @@ def browse_page(user: User) -> None:
 
     st.markdown("<h3 style='color: #5A3F7F; font-size: 1.5rem; font-weight: 600;'>搜尋物品</h3>", unsafe_allow_html=True)
     
-    # Initialize filter variables
-    query = ""
-    category_filter = "全部"
-    location_filter = "全部"
-    
     with st.expander("進階篩選", expanded=False):
         col1, col2, col3 = st.columns(3)
         with col1:
-            query = st.text_input("搜尋關鍵字", placeholder="例如：桌燈、電子產品、臺南市、陳小明", key="search_query", value=st.session_state.get("search_query", ""))
+            query = st.text_input("搜尋關鍵字", placeholder="例如：桌燈、電子產品、臺南市、陳小明", key="search_query")
         with col2:
             categories = category_options()
-            category_options_list = ["全部"] + list(categories.keys())
-            current_category = st.session_state.get("category_filter", "全部")
-            try:
-                category_index = category_options_list.index(current_category)
-            except ValueError:
-                category_index = 0
-            category_filter = st.selectbox("物品類別", category_options_list, format_func=lambda code: categories[code] if code != "全部" else "全部", key="category_filter", index=category_index)
+            category_filter = st.selectbox("物品類別", ["全部"] + list(categories.keys()), format_func=lambda code: categories[code] if code != "全部" else "全部", key="category_filter")
         with col3:
             locations = list(TAIWAN_LOCATIONS.keys())
-            location_options_list = ["全部"] + locations
-            current_location = st.session_state.get("location_filter", "全部")
-            try:
-                location_index = location_options_list.index(current_location)
-            except ValueError:
-                location_index = 0
-            location_filter = st.selectbox("地區", location_options_list, key="location_filter", index=location_index)
-    
-    # Use session state to store filter values
-    if "search_query" not in st.session_state:
-        st.session_state.search_query = ""
-    if "category_filter" not in st.session_state:
-        st.session_state.category_filter = "全部"
-    if "location_filter" not in st.session_state:
-        st.session_state.location_filter = "全部"
-    
-    # Update session state from expander inputs
-    st.session_state.search_query = query
-    st.session_state.category_filter = category_filter
-    st.session_state.location_filter = location_filter
+            location_filter = st.selectbox("地區", ["全部"] + locations, key="location_filter")
     
     # Perform search with filters
-    if st.session_state.search_query.strip() or st.session_state.category_filter != "全部" or st.session_state.location_filter != "全部":
-        results = search_items(db(), user.user_id, st.session_state.search_query, limit=20, current_latitude=latitude, current_longitude=longitude)
+    if query.strip() or category_filter != "全部" or location_filter != "全部":
+        results = search_items(db(), user.user_id, query, limit=20, current_latitude=latitude, current_longitude=longitude)
         
         # Apply category filter
-        if st.session_state.category_filter != "全部":
-            results = [(item, score) for item, score in results if item.category == st.session_state.category_filter]
+        if category_filter != "全部":
+            results = [(item, score) for item, score in results if item.category == category_filter]
         
         # Apply location filter
-        if st.session_state.location_filter != "全部":
-            results = [(item, score) for item, score in results if item.location == st.session_state.location_filter]
+        if location_filter != "全部":
+            results = [(item, score) for item, score in results if item.location == location_filter]
         
         if not results:
             st.info("沒有找到符合的物品，可以調整篩選條件試試。")
