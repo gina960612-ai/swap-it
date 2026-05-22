@@ -138,18 +138,18 @@ def local_css() -> None:
 
         /* 🎴 卡片樣式 (核心改版) */
         .swap-card {
-            border: 2px solid #E8DDF5 !important;
-            border-radius: 16px !important;
-            padding: 16px !important;
-            background: #FAF8FF !important;
+            border: 1px solid #E8DDF5;
+            border-radius: 16px;
+            padding: 20px;
+            background: #ffffff;
             min-height: auto;
-            box-shadow: 0 4px 12px rgba(123, 91, 163, 0.15) !important;
+            box-shadow: 0 2px 8px rgba(123, 91, 163, 0.08);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-bottom: 24px !important;
-            margin-top: 0 !important;
+            margin-bottom: 20px;
+            margin-top: 0;
         }
         .swap-card:hover {
-            box-shadow: 0 8px 24px rgba(123, 91, 163, 0.2) !important;
+            box-shadow: 0 8px 24px rgba(123, 91, 163, 0.12);
             transform: translateY(-2px);
         }
         .swap-card h3 {
@@ -546,7 +546,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
     # 星星評分
     stars = "⭐" * int(item.owner.rating)
 
-    st.markdown("<div style='border: 3px solid #7B5BA3; border-radius: 16px; padding: 20px; background: #F5F0FF; margin-bottom: 24px;'>", unsafe_allow_html=True)
+    st.markdown('<div class="swap-card">', unsafe_allow_html=True)
     
     # Show inline actions if requested
     if show_actions and user and item.owner_id == user.user_id and item.status == "active":
