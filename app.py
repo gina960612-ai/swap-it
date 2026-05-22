@@ -140,7 +140,7 @@ def local_css() -> None:
         .swap-card {
             border: none;
             border-radius: 16px;
-            padding: 20px;
+            padding: 16px;
             background: #ffffff;
             min-height: auto;
             box-shadow: none;
