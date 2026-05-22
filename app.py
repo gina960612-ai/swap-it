@@ -699,31 +699,56 @@ def my_items_page(user: User) -> None:
     st.markdown("<h4 style='color: #5A3F7F; font-size: 1rem; font-weight: 600;'>搜尋你的物品</h4>", unsafe_allow_html=True)
     search_query = st.text_input("輸入物品名稱或描述...", placeholder="例如：水壺、二手...", key="my_items_search")
     
-    with st.expander("新增物品", expanded=False):
-        st.markdown("<h4 style='color: #5A3F7F; font-size: 1rem; font-weight: 600;'>刊登新物品</h4>", unsafe_allow_html=True)
-        with st.form("add_item_form"):
-            categories = category_options()
-            name = st.text_input("物品名稱", placeholder="例如：二手桌燈")
-            category = st.selectbox("分類", list(categories.keys()), format_func=lambda code: categories[code])
-            description = st.text_area("物品描述", height=90, placeholder="描述物品的狀態、使用時長等...")
-            location = st.selectbox("物品所在縣市", list(TAIWAN_LOCATIONS.keys()), index=4)
-            st.caption("上傳商品圖片或檔案（手機可直接拍照），或使用圖片網址。")
-            uploaded_image = st.file_uploader("上傳商品圖片或檔案", type=None)
-            image_url = st.text_input("圖片網址（可不填）", placeholder="例如：https://...")
-            submitted = st.form_submit_button("刊登物品", type="primary", use_container_width=True)
-            if submitted:
-                try:
-                    image_path = ""
-                    if uploaded_image is not None:
-                        image_path = save_uploaded_image(uploaded_image, "item")
-                    elif image_url:
-                        image_path = image_url.strip()
-                    latitude, longitude = location_coords(location)
-                    create_item(db(), user.user_id, name, category, description, location, [], image_path, latitude, longitude)
-                    st.success("物品已成功刊登！")
-                    st.info("請關閉展開器以清空表單內容")
-                except ValueError as exc:
-                    st.error(f"{str(exc)}")
+    add_item_placeholder = st.empty()
+    
+    # 控制是否顯示新增物品表單
+    if "show_add_item_form" not in st.session_state:
+        st.session_state.show_add_item_form = False
+    
+    # 如果剛剛成功刊登物品，隱藏表單
+    if "add_item_success" in st.session_state and st.session_state.add_item_success:
+        st.session_state.show_add_item_form = False
+        st.session_state.add_item_success = False
+        st.success("物品已成功刊登！")
+        st.button("刊登新物品", on_click=lambda: setattr(st.session_state, 'show_add_item_form', True), key="show_add_item_btn")
+    else:
+        with add_item_placeholder.container():
+            if st.session_state.show_add_item_form:
+                st.markdown("<h4 style='color: #5A3F7F; font-size: 1rem; font-weight: 600;'>刊登新物品</h4>", unsafe_allow_html=True)
+                with st.form("add_item_form"):
+                    categories = category_options()
+                    name = st.text_input("物品名稱", placeholder="例如：二手桌燈")
+                    category = st.selectbox("分類", list(categories.keys()), format_func=lambda code: categories[code])
+                    description = st.text_area("物品描述", height=90, placeholder="描述物品的狀態、使用時長等...")
+                    location = st.selectbox("物品所在縣市", list(TAIWAN_LOCATIONS.keys()), index=4)
+                    st.caption("上傳商品圖片或檔案（手機可直接拍照），或使用圖片網址。")
+                    uploaded_image = st.file_uploader("上傳商品圖片或檔案", type=None)
+                    image_url = st.text_input("圖片網址（可不填）", placeholder="例如：https://...")
+                    col1, col2 = st.columns([1, 1])
+                    with col1:
+                        submitted = st.form_submit_button("刊登物品", type="primary", use_container_width=True)
+                    with col2:
+                        cancel = st.form_submit_button("取消", use_container_width=True)
+                    
+                    if submitted:
+                        try:
+                            image_path = ""
+                            if uploaded_image is not None:
+                                image_path = save_uploaded_image(uploaded_image, "item")
+                            elif image_url:
+                                image_path = image_url.strip()
+                            latitude, longitude = location_coords(location)
+                            create_item(db(), user.user_id, name, category, description, location, [], image_path, latitude, longitude)
+                            st.session_state.add_item_success = True
+                            st.rerun()
+                        except ValueError as exc:
+                            st.error(f"{str(exc)}")
+                    
+                    if cancel:
+                        st.session_state.show_add_item_form = False
+                        st.rerun()
+            else:
+                st.button("刊登新物品", on_click=lambda: setattr(st.session_state, 'show_add_item_form', True), key="show_add_item_btn")
 
     st.markdown("<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600;'>你的物品列表</h3>", unsafe_allow_html=True)
     if "edit_item_id" not in st.session_state:
