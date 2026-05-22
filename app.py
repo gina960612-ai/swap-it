@@ -138,18 +138,18 @@ def local_css() -> None:
 
         /* 🎴 卡片樣式 (核心改版) */
         .swap-card {
-            border: 1px solid #E8DDF5;
+            border: 2px solid #E8DDF5;
             border-radius: 16px;
             padding: 16px;
             background: #ffffff;
             min-height: auto;
-            box-shadow: 0 2px 8px rgba(123, 91, 163, 0.08);
+            box-shadow: 0 4px 12px rgba(123, 91, 163, 0.15);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             margin-top: 0;
         }
         .swap-card:hover {
-            box-shadow: 0 8px 24px rgba(123, 91, 163, 0.12);
+            box-shadow: 0 8px 24px rgba(123, 91, 163, 0.2);
             transform: translateY(-2px);
         }
         .swap-card h3 {
