@@ -138,12 +138,12 @@ def local_css() -> None:
 
         /* 🎴 卡片樣式 (核心改版) */
         .swap-card {
-            border: none;
+            border: 1px solid #E8DDF5;
             border-radius: 16px;
             padding: 16px;
             background: #ffffff;
             min-height: auto;
-            box-shadow: none;
+            box-shadow: 0 2px 8px rgba(123, 91, 163, 0.08);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             margin-bottom: 20px;
             margin-top: 0;
