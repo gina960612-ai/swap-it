@@ -709,7 +709,7 @@ def my_items_page(user: User) -> None:
         st.caption("上傳商品圖片或檔案（手機可直接拍照），或使用圖片網址。")
         uploaded_image = st.file_uploader("上傳商品圖片或檔案", type=None)
         image_url = st.text_input("圖片網址（可不填）", placeholder="例如：https://...")
-        if st.button("刊登物品", type="primary", use_container_width=True):
+        if st.button("刊登物品", type="primary", use_container_width=True, key="add_item_button"):
             try:
                 image_path = ""
                 if uploaded_image is not None:
@@ -719,6 +719,7 @@ def my_items_page(user: User) -> None:
                 latitude, longitude = location_coords(location)
                 create_item(db(), user.user_id, name, category, description, location, [], image_path, latitude, longitude)
                 st.success("物品已成功刊登！")
+                st.rerun()
             except ValueError as exc:
                 st.error(f"{str(exc)}")
 
