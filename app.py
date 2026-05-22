@@ -701,19 +701,15 @@ def my_items_page(user: User) -> None:
     
     with st.expander("新增物品", expanded=False):
         st.markdown("<h4 style='color: #5A3F7F; font-size: 1rem; font-weight: 600;'>刊登新物品</h4>", unsafe_allow_html=True)
-        # 使用 session state 來追蹤表單是否需要重置
-        if "add_item_form_key" not in st.session_state:
-            st.session_state.add_item_form_key = 0
-        
-        with st.form("add_item_form", key=f"add_item_form_{st.session_state.add_item_form_key}"):
+        with st.form("add_item_form"):
             categories = category_options()
-            name = st.text_input("物品名稱", placeholder="例如：二手桌燈", key="add_item_name")
-            category = st.selectbox("分類", list(categories.keys()), format_func=lambda code: categories[code], key="add_item_category")
-            description = st.text_area("物品描述", height=90, placeholder="描述物品的狀態、使用時長等...", key="add_item_description")
-            location = st.selectbox("物品所在縣市", list(TAIWAN_LOCATIONS.keys()), index=4, key="add_item_location")
+            name = st.text_input("物品名稱", placeholder="例如：二手桌燈")
+            category = st.selectbox("分類", list(categories.keys()), format_func=lambda code: categories[code])
+            description = st.text_area("物品描述", height=90, placeholder="描述物品的狀態、使用時長等...")
+            location = st.selectbox("物品所在縣市", list(TAIWAN_LOCATIONS.keys()), index=4)
             st.caption("上傳商品圖片或檔案（手機可直接拍照），或使用圖片網址。")
-            uploaded_image = st.file_uploader("上傳商品圖片或檔案", type=None, key="add_item_image")
-            image_url = st.text_input("圖片網址（可不填）", placeholder="例如：https://...", key="add_item_image_url")
+            uploaded_image = st.file_uploader("上傳商品圖片或檔案", type=None)
+            image_url = st.text_input("圖片網址（可不填）", placeholder="例如：https://...")
             submitted = st.form_submit_button("刊登物品", type="primary", use_container_width=True)
             if submitted:
                 try:
@@ -725,8 +721,6 @@ def my_items_page(user: User) -> None:
                     latitude, longitude = location_coords(location)
                     create_item(db(), user.user_id, name, category, description, location, [], image_path, latitude, longitude)
                     st.success("物品已成功刊登！")
-                    # 增加表單鍵值以重置表單
-                    st.session_state.add_item_form_key += 1
                     st.rerun()
                 except ValueError as exc:
                     st.error(f"{str(exc)}")
