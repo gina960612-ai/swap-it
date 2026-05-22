@@ -769,8 +769,8 @@ def my_items_page(user: User) -> None:
         return
     
     for item in items:
-        item_card(item, show_actions=True, user=user)
-        st.divider()
+        with st.expander(f"{item.name} - {category_label(item.category)}"):
+            item_card(item, show_actions=True, user=user)
 
     if st.session_state.edit_item_id:
         edit_item = db().get(Item, st.session_state.edit_item_id)
