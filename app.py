@@ -605,6 +605,8 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
         unsafe_allow_html=True,
     )
     
+    st.markdown('</div>', unsafe_allow_html=True)
+    
     with st.container():
         st.markdown(
             f"<div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;'>",
