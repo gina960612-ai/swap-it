@@ -548,12 +548,25 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
 
     st.markdown('<div class="swap-card">', unsafe_allow_html=True)
     
+    # Show image at the top if it exists
+    if image_source and is_image_path(image_source):
+        try:
+            if image_source.startswith("data:image"):
+                st.image(image_source, use_container_width=True)
+            elif os.path.exists(image_source):
+                st.image(image_source, use_container_width=True)
+            elif image_source.startswith("http"):
+                st.image(image_source, use_container_width=True)
+        except Exception:
+            # If image fails to load, just skip it without showing placeholder
+            pass
+    
     # Show inline actions if requested
     if show_actions and user and item.owner_id == user.user_id and item.status == "active":
         col_name, col_actions = st.columns([5, 1])
         with col_name:
             st.markdown(
-                f"<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600; margin: 0 0 16px 0;'>{escape(item.name)}</h3>",
+                f"<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600; margin: 16px 0 8px 0;'>{escape(item.name)}</h3>",
                 unsafe_allow_html=True,
             )
         with col_actions:
@@ -572,7 +585,7 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
                         st.error(f"{str(exc)}")
     else:
         st.markdown(
-            f"<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600; margin: 0 0 16px 0;'>{escape(item.name)}</h3>",
+            f"<h3 style='color: #5A3F7F; font-size: 1.1rem; font-weight: 600; margin: 16px 0 8px 0;'>{escape(item.name)}</h3>",
             unsafe_allow_html=True,
         )
     
@@ -580,28 +593,15 @@ def item_card(item: Item, score: float | None = None, score_label: str = "推薦
         "\n".join(
             [
                 f"<div class='muted' style='margin-bottom: 4px;'>{escape(category_label(item.category))} · {escape(item.location or '縣市未設定')} · <span style='color: #7B5BA3; font-weight: 600;'>{escape(STATUS_TEXT.get(item.status, item.status))}</span></div>",
-                f"<div class='muted' style='margin-bottom: 4px;'>{score_line}</div>",
+                f"<div class='muted' style='margin-bottom: 8px;'>{score_line}</div>",
             ]
         ),
         unsafe_allow_html=True,
     )
     
-    # Only show image if it exists and is valid - in a separate section
-    if image_source and is_image_path(image_source):
-        try:
-            if image_source.startswith("data:image"):
-                st.image(image_source, use_container_width=True)
-            elif os.path.exists(image_source):
-                st.image(image_source, use_container_width=True)
-            elif image_source.startswith("http"):
-                st.image(image_source, use_container_width=True)
-        except Exception:
-            # If image fails to load, just skip it without showing placeholder
-            pass
-    
-    # No placeholder shown even when there's no image
+    # Description
     st.markdown(
-        f"<p style='color: #2C2C2C; line-height: 1.4; margin-bottom: 0px; margin-top: 0px;'>{escape(item.description or '尚未填寫描述。')}</p>",
+        f"<p style='color: #2C2C2C; line-height: 1.4; margin-bottom: 16px; margin-top: 8px;'>{escape(item.description or '尚未填寫描述。')}</p>",
         unsafe_allow_html=True,
     )
     
@@ -769,8 +769,7 @@ def my_items_page(user: User) -> None:
         return
     
     for item in items:
-        with st.expander(f"{item.name} - {category_label(item.category)}"):
-            item_card(item, show_actions=True, user=user)
+        item_card(item, show_actions=True, user=user)
 
     if st.session_state.edit_item_id:
         edit_item = db().get(Item, st.session_state.edit_item_id)
