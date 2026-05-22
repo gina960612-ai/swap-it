@@ -663,7 +663,7 @@ def offer_request_actions(user: User, target_item: Item, key_prefix: str) -> Non
 
 
 def browse_page(user: User) -> None:
-    st.markdown("<h1 style='color: #7B5BA3; margin-bottom: 32px; padding-bottom: 16px;'>瀏覽物品</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #7B5BA3; margin-bottom: 32px; padding-bottom: 16px; line-height: 1.4;'>瀏覽物品</h1>", unsafe_allow_html=True)
     st.markdown("<p style='color: #6b7280; font-size: 0.95rem;'>找到喜歡的物品？用你的物品送出交換請求吧！</p>", unsafe_allow_html=True)
     latitude, longitude = current_coords()
 
@@ -693,7 +693,7 @@ def browse_page(user: User) -> None:
 
 
 def my_items_page(user: User) -> None:
-    st.markdown("<h1 style='color: #7B5BA3; margin-bottom: 32px; padding-bottom: 16px;'>我的物品</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #7B5BA3; margin-bottom: 32px; padding-bottom: 16px; line-height: 1.4;'>我的物品</h1>", unsafe_allow_html=True)
     
     # 搜尋功能 - 放在最上方
     st.markdown("<h4 style='color: #5A3F7F; font-size: 1rem; font-weight: 600;'>搜尋你的物品</h4>", unsafe_allow_html=True)
@@ -1000,7 +1000,7 @@ def chat_view(user: User) -> None:
 
 
 def requests_and_chat_page(user: User) -> None:
-    st.markdown("<h1 style='color: #7B5BA3; margin-bottom: 32px; padding-bottom: 16px;'>交換請求與聊天</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #7B5BA3; margin-bottom: 32px; padding-bottom: 16px; line-height: 1.4;'>交換請求與聊天</h1>", unsafe_allow_html=True)
     incoming_count, rejected_count = notification_counts(db(), user.user_id)
     st.markdown(f"<p style='color: #6b7280;'>收到待回覆：<strong style='color: #FF69B4;'>{incoming_count}</strong> · 被拒絕通知：<strong style='color: #FF6B9D;'>{rejected_count}</strong></p>", unsafe_allow_html=True)
     
@@ -1014,7 +1014,7 @@ def requests_and_chat_page(user: User) -> None:
 
 
 def profile_page(user: User) -> None:
-    st.markdown("<h1 style='color: #7B5BA3; margin-bottom: 32px; padding-bottom: 16px;'>個人資料</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #7B5BA3; margin-bottom: 32px; padding-bottom: 16px; line-height: 1.4;'>個人資料</h1>", unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -1085,7 +1085,7 @@ def profile_page(user: User) -> None:
 
 
 def history_page(user: User) -> None:
-    st.markdown("<h1 style='color: #7B5BA3; margin-bottom: 32px; padding-bottom: 16px;'>歷史交易</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color: #7B5BA3; margin-bottom: 32px; padding-bottom: 16px; line-height: 1.4;'>歷史交易</h1>", unsafe_allow_html=True)
     st.markdown("<p style='color: #6b7280;'>查看所有已完成和已取消的交易紀錄。</p>", unsafe_allow_html=True)
     
     history_matches = user_history_matches(db(), user.user_id)
