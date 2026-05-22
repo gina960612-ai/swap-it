@@ -141,7 +141,7 @@ def local_css() -> None:
             border: 2px solid #E8DDF5;
             border-radius: 16px;
             padding: 16px;
-            background: #ffffff;
+            background: #FAF8FF;
             min-height: auto;
             box-shadow: 0 4px 12px rgba(123, 91, 163, 0.15);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
