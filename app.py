@@ -666,11 +666,48 @@ def browse_page(user: User) -> None:
     latitude, longitude = current_coords()
 
     st.markdown("<h3 style='color: #5A3F7F; font-size: 1.5rem; font-weight: 600;'>搜尋物品</h3>", unsafe_allow_html=True)
-    query = st.text_input("搜尋", placeholder="例如：桌燈、電子產品、臺南市、陳小明")
-    if query.strip():
-        results = search_items(db(), user.user_id, query, limit=20, current_latitude=latitude, current_longitude=longitude)
+    
+    with st.expander("進階篩選", expanded=False):
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            query = st.text_input("搜尋關鍵字", placeholder="例如：桌燈、電子產品、臺南市、陳小明", key="search_query")
+        with col2:
+            categories = category_options()
+            category_filter = st.selectbox("物品類別", ["全部"] + list(categories.keys()), format_func=lambda code: categories[code] if code != "全部" else "全部", key="category_filter")
+        with col3:
+            locations = list(TAIWAN_LOCATIONS.keys())
+            location_filter = st.selectbox("地區", ["全部"] + locations, key="location_filter")
+    
+    # Use session state to store filter values
+    if "search_query" not in st.session_state:
+        st.session_state.search_query = ""
+    if "category_filter" not in st.session_state:
+        st.session_state.category_filter = "全部"
+    if "location_filter" not in st.session_state:
+        st.session_state.location_filter = "全部"
+    
+    # Update session state from expander inputs
+    if query:
+        st.session_state.search_query = query
+    if category_filter != "全部":
+        st.session_state.category_filter = category_filter
+    if location_filter != "全部":
+        st.session_state.location_filter = location_filter
+    
+    # Perform search with filters
+    if st.session_state.search_query.strip() or st.session_state.category_filter != "全部" or st.session_state.location_filter != "全部":
+        results = search_items(db(), user.user_id, st.session_state.search_query, limit=20, current_latitude=latitude, current_longitude=longitude)
+        
+        # Apply category filter
+        if st.session_state.category_filter != "全部":
+            results = [(item, score) for item, score in results if item.category == st.session_state.category_filter]
+        
+        # Apply location filter
+        if st.session_state.location_filter != "全部":
+            results = [(item, score) for item, score in results if item.location == st.session_state.location_filter]
+        
         if not results:
-            st.info("沒有找到符合的物品，可以換個關鍵字試試。")
+            st.info("沒有找到符合的物品，可以調整篩選條件試試。")
             return
         st.success(f"找到 {len(results)} 筆結果，已依符合程度與距離排序。")
         for index, (item, score) in enumerate(results, start=1):
