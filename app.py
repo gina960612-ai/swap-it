@@ -425,11 +425,16 @@ def login_screen() -> None:
         account_name = st.text_input("帳號名稱", placeholder="輸入你的帳號")
         password = st.text_input("密碼", type="password", placeholder="輸入密碼")
         if st.button("登入", type="primary", use_container_width=True):
-            user = login_user(db(), account_name, password)
-            if user:
-                st.session_state.user_id = user.user_id
-                st.rerun()
-            st.error("帳號或密碼不正確。")
+            if not account_name or not password:
+                st.error("請輸入帳號和密碼")
+            else:
+                user = login_user(db(), account_name, password)
+                if user:
+                    st.session_state.user_id = user.user_id
+                    st.rerun()
+                else:
+                    st.error("帳號或密碼不正確。請檢查您的帳號名稱和密碼是否正確。")
+                    st.info("提示：如果您剛註冊，請確認您使用的是正確的帳號名稱。")
 
     with register_tab:
         st.markdown("### 加入 SwapIt 社群")
