@@ -1010,7 +1010,7 @@ def chat_view(user: User) -> None:
         if room and room.messages:
             for message in room.messages:
                 is_own_message = message.sender_id == user.user_id
-                with st.chat_message("user" if is_own_message else "assistant", name="你" if is_own_message else other.name, avatar="👤" if not is_own_message else None):
+                with st.chat_message("user" if is_own_message else "assistant", name="你" if is_own_message else other.name):
                     st.markdown(f"{escape(message.content)}")
                     st.caption(message.created_at.strftime('%H:%M'))
 
